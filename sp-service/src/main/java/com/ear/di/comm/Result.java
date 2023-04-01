@@ -2,7 +2,11 @@ package com.ear.di.comm;
 
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSON;
+import com.ear.di.enums.RespCode;
 import com.ear.di.exception.BusiException;
+
+import java.util.List;
+import java.util.Map;
 
 public class Result {
     /**
@@ -31,8 +35,21 @@ public class Result {
         return new Result(0, data, "交易成功");
     }
 
+    public static Result judgeResult(boolean isSuccess , Object data, RespCode respCode) {
+        if(isSuccess){
+            return success( data);
+        }else {
+            return error(data,respCode);
+        }
+    }
+
     public static Result error(Object data, BusiException exception) {
-        return new Result(1, data, exception.getRespCode().getRespMessage());
+        return error( data, exception.getRespCode());
+    }
+
+
+    public static Result error(Object data, RespCode respCode) {
+        return new Result(1, data, respCode.getRespMessage());
     }
 
     @Override
@@ -50,5 +67,19 @@ public class Result {
 
     public Object getData() {
         return data;
+    }
+
+    public boolean dataIsNummOrEmpty(){
+        if(data == null){
+            return true;
+        }else{
+            if(data instanceof List){
+                return ((List)data).isEmpty();
+            }
+            if(data instanceof Map){
+                return ((Map)data).isEmpty();
+            }
+        }
+        return false;
     }
 }

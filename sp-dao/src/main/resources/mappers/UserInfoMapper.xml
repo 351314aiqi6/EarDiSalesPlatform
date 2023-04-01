@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ear.di.dao.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ear.di.entity.UserInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_role" property="userRole" jdbcType="VARCHAR" />
+    <result column="user_login_name" property="userLoginName" jdbcType="VARCHAR" />
+    <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
+    <result column="user_id_no" property="userIdNo" jdbcType="VARCHAR" />
+    <result column="user_id_type" property="userIdType" jdbcType="VARCHAR" />
+    <result column="user_real_name" property="userRealName" jdbcType="VARCHAR" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="user_mobile_phone" property="userMobilePhone" jdbcType="VARCHAR" />
+    <result column="user_address" property="userAddress" jdbcType="VARCHAR" />
+    <result column="user_additional" property="userAdditional" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_role, user_login_name, user_password, user_id_no, user_id_type, user_real_name, 
+    user_email, user_mobile_phone, user_address, user_additional, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ear.di.entity.UserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ear.di.entity.UserInfoExample" >
+    delete from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ear.di.entity.UserInfo" >
+    insert into user_info (id, user_role, user_login_name, 
+      user_password, user_id_no, user_id_type, 
+      user_real_name, user_email, user_mobile_phone, 
+      user_address, user_additional, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{userRole,jdbcType=VARCHAR}, #{userLoginName,jdbcType=VARCHAR}, 
+      #{userPassword,jdbcType=VARCHAR}, #{userIdNo,jdbcType=VARCHAR}, #{userIdType,jdbcType=VARCHAR}, 
+      #{userRealName,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{userMobilePhone,jdbcType=VARCHAR}, 
+      #{userAddress,jdbcType=VARCHAR}, #{userAdditional,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ear.di.entity.UserInfo" >
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userRole != null" >
+        user_role,
+      </if>
+      <if test="userLoginName != null" >
+        user_login_name,
+      </if>
+      <if test="userPassword != null" >
+        user_password,
+      </if>
+      <if test="userIdNo != null" >
+        user_id_no,
+      </if>
+      <if test="userIdType != null" >
+        user_id_type,
+      </if>
+      <if test="userRealName != null" >
+        user_real_name,
+      </if>
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="userMobilePhone != null" >
+        user_mobile_phone,
+      </if>
+      <if test="userAddress != null" >
+        user_address,
+      </if>
+      <if test="userAdditional != null" >
+        user_additional,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userRole != null" >
+        #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="userLoginName != null" >
+        #{userLoginName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdNo != null" >
+        #{userIdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdType != null" >
+        #{userIdType,jdbcType=VARCHAR},
+      </if>
+      <if test="userRealName != null" >
+        #{userRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userMobilePhone != null" >
+        #{userMobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddress != null" >
+        #{userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userAdditional != null" >
+        #{userAdditional,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ear.di.entity.UserInfoExample" resultType="java.lang.Integer" >
+    select count(*) from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userRole != null" >
+        user_role = #{record.userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userLoginName != null" >
+        user_login_name = #{record.userLoginName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPassword != null" >
+        user_password = #{record.userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userIdNo != null" >
+        user_id_no = #{record.userIdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userIdType != null" >
+        user_id_type = #{record.userIdType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userRealName != null" >
+        user_real_name = #{record.userRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userEmail != null" >
+        user_email = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userMobilePhone != null" >
+        user_mobile_phone = #{record.userMobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userAddress != null" >
+        user_address = #{record.userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userAdditional != null" >
+        user_additional = #{record.userAdditional,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_info
+    set id = #{record.id,jdbcType=BIGINT},
+      user_role = #{record.userRole,jdbcType=VARCHAR},
+      user_login_name = #{record.userLoginName,jdbcType=VARCHAR},
+      user_password = #{record.userPassword,jdbcType=VARCHAR},
+      user_id_no = #{record.userIdNo,jdbcType=VARCHAR},
+      user_id_type = #{record.userIdType,jdbcType=VARCHAR},
+      user_real_name = #{record.userRealName,jdbcType=VARCHAR},
+      user_email = #{record.userEmail,jdbcType=VARCHAR},
+      user_mobile_phone = #{record.userMobilePhone,jdbcType=VARCHAR},
+      user_address = #{record.userAddress,jdbcType=VARCHAR},
+      user_additional = #{record.userAdditional,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ear.di.entity.UserInfo" >
+    update user_info
+    <set >
+      <if test="userRole != null" >
+        user_role = #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="userLoginName != null" >
+        user_login_name = #{userLoginName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        user_password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdNo != null" >
+        user_id_no = #{userIdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdType != null" >
+        user_id_type = #{userIdType,jdbcType=VARCHAR},
+      </if>
+      <if test="userRealName != null" >
+        user_real_name = #{userRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userMobilePhone != null" >
+        user_mobile_phone = #{userMobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddress != null" >
+        user_address = #{userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userAdditional != null" >
+        user_additional = #{userAdditional,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ear.di.entity.UserInfo" >
+    update user_info
+    set user_role = #{userRole,jdbcType=VARCHAR},
+      user_login_name = #{userLoginName,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      user_id_no = #{userIdNo,jdbcType=VARCHAR},
+      user_id_type = #{userIdType,jdbcType=VARCHAR},
+      user_real_name = #{userRealName,jdbcType=VARCHAR},
+      user_email = #{userEmail,jdbcType=VARCHAR},
+      user_mobile_phone = #{userMobilePhone,jdbcType=VARCHAR},
+      user_address = #{userAddress,jdbcType=VARCHAR},
+      user_additional = #{userAdditional,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

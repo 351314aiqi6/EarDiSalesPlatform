@@ -1,7 +1,6 @@
 package com.ear.di.start;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.ear.di.dao.IppEMandateEventMapper;
 import com.ear.di.service.ControllerTest;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
