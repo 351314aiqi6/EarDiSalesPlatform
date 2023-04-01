@@ -1,4 +1,4 @@
-package com.ear.di.EarDiSalesPlatform;
+package com.ear.di.start;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
