@@ -7,15 +7,12 @@ import com.ear.di.dao.UserInfoMapper;
 import com.ear.di.entity.UserInfo;
 import com.ear.di.entity.UserInfoExample;
 import com.ear.di.enums.RespCode;
-import com.ear.di.exception.BusiException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Date;
 import java.util.List;
 
@@ -54,7 +51,7 @@ public class UserController {
      * @param userEmail       用户邮箱
      * @param userMobilePhone 用户手机号
      * @param userAddress     用户地址
-     * @return
+     * @return 交易结果
      */
     @ResponseBody
     @RequestMapping(value = "/register", method = {RequestMethod.GET, RequestMethod.POST})
@@ -95,7 +92,7 @@ public class UserController {
      * @param userEmail       用户邮箱
      * @param userMobilePhone 用户手机号
      * @param userAddress     用户地址
-     * @return
+     * @return 交易结果
      */
     @ResponseBody
     @RequestMapping(value = "/update", method = {RequestMethod.GET, RequestMethod.POST})
