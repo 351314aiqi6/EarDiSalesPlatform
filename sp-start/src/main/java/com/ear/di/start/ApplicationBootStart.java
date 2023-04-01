@@ -13,7 +13,6 @@ public class ApplicationBootStart {
 	public static void main(String[] args) {
 		SpringApplication.run(ApplicationBootStart.class, args);
 		System.out.println(SpringUtil.getBean(ControllerTest.class));
-
 	}
 }
 
