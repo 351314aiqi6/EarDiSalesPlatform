@@ -64,7 +64,7 @@ public class UserController {
                            @RequestParam(name = "userEmail") String userEmail,
                            @RequestParam(name = "userMobilePhone") String userMobilePhone,
                            @RequestParam(name = "userAddress") String userAddress) {
-        if (!this.getUser(userLoginName).dataIsNummOrEmpty()) {
+        if (!this.getUser(userLoginName, null).dataIsNummOrEmpty()) {
             return Result.error(null, RespCode.LOGIN_USER_NAME_IS_EXIST);
         } else {
             UserInfo userInfo = new UserInfo();
@@ -97,29 +97,29 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/update", method = {RequestMethod.GET, RequestMethod.POST})
     public Result update(@RequestParam(name = "userLoginName") String userLoginName,
-                           @RequestParam(name = "userPassword",required = false) String userPassword,
-                           @RequestParam(name = "userEmail",required = false) String userEmail,
-                           @RequestParam(name = "userMobilePhone",required = false) String userMobilePhone,
-                           @RequestParam(name = "userAddress",required = false) String userAddress) {
-        if (this.getUser(userLoginName).dataIsNummOrEmpty()) {
+                         @RequestParam(name = "userPassword", required = false) String userPassword,
+                         @RequestParam(name = "userEmail", required = false) String userEmail,
+                         @RequestParam(name = "userMobilePhone", required = false) String userMobilePhone,
+                         @RequestParam(name = "userAddress", required = false) String userAddress) {
+        if (this.getUser(userLoginName, null).dataIsNummOrEmpty()) {
             return Result.error(null, RespCode.USER_IS_NOT_EXIST);
         } else {
             UserInfoExample example = new UserInfoExample();
             example.createCriteria().andUserLoginNameEqualTo(userLoginName);
             UserInfo userInfo = new UserInfo();
-            if(StringUtils.isNotBlank(userPassword)){
+            if (StringUtils.isNotBlank(userPassword)) {
                 userInfo.setUserPassword(userPassword);
             }
-            if(StringUtils.isNotBlank(userEmail)){
+            if (StringUtils.isNotBlank(userEmail)) {
                 userInfo.setUserEmail(userEmail);
             }
-            if(StringUtils.isNotBlank(userMobilePhone)){
+            if (StringUtils.isNotBlank(userMobilePhone)) {
                 userInfo.setUserMobilePhone(userMobilePhone);
             }
-            if(StringUtils.isNotBlank(userAddress)){
+            if (StringUtils.isNotBlank(userAddress)) {
                 userInfo.setUserAddress(userAddress);
             }
-            return Result.judgeResult(userInfoMapper.updateByExampleSelective(userInfo,example) == 1,
+            return Result.judgeResult(userInfoMapper.updateByExampleSelective(userInfo, example) == 1,
                     userInfo, RespCode.UPDATE_USER_ERROR);
         }
     }
@@ -132,9 +132,16 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/getUser", method = {RequestMethod.GET, RequestMethod.POST})
-    public Result getUser(@RequestParam(name = "userLoginName") String userLoginName) {
+    public Result getUser(@RequestParam(name = "userLoginName", required = false) String userLoginName,
+                          @RequestParam(name = "userId", required = false) String userId) {
         UserInfoExample example = new UserInfoExample();
-        example.createCriteria().andUserLoginNameEqualTo(userLoginName);
+        UserInfoExample.Criteria criteria = example.createCriteria();
+        if (StringUtils.isNotBlank(userLoginName)) {
+            criteria.andUserLoginNameEqualTo(userLoginName);
+        }
+        if (StringUtils.isNotBlank(userId)) {
+            criteria.andIdEqualTo(Long.parseLong(userId));
+        }
         List<UserInfo> userInfos = userInfoMapper.selectByExample(example);
         return Result.success(userInfos);
     }

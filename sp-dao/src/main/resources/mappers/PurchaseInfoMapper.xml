@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ear.di.dao.PurchaseInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ear.di.entity.PurchaseInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="purchase_id" property="purchaseId" jdbcType="VARCHAR" />
+    <result column="purchase_user_id" property="purchaseUserId" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="purchase_number" property="purchaseNumber" jdbcType="INTEGER" />
+    <result column="receive_address" property="receiveAddress" jdbcType="VARCHAR" />
+    <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+    <result column="purchase_additional" property="purchaseAdditional" jdbcType="VARCHAR" />
+    <result column="purchase_status" property="purchaseStatus" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, purchase_id, purchase_user_id, goods_id, purchase_number, receive_address, total_price, 
+    purchase_additional, purchase_status, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ear.di.entity.PurchaseInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from purchase_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from purchase_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from purchase_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ear.di.entity.PurchaseInfoExample" >
+    delete from purchase_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ear.di.entity.PurchaseInfo" >
+    insert into purchase_info (id, purchase_id, purchase_user_id, 
+      goods_id, purchase_number, receive_address, 
+      total_price, purchase_additional, purchase_status, 
+      create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{purchaseId,jdbcType=VARCHAR}, #{purchaseUserId,jdbcType=VARCHAR}, 
+      #{goodsId,jdbcType=VARCHAR}, #{purchaseNumber,jdbcType=INTEGER}, #{receiveAddress,jdbcType=VARCHAR}, 
+      #{totalPrice,jdbcType=DECIMAL}, #{purchaseAdditional,jdbcType=VARCHAR}, #{purchaseStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ear.di.entity.PurchaseInfo" >
+    insert into purchase_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="purchaseId != null" >
+        purchase_id,
+      </if>
+      <if test="purchaseUserId != null" >
+        purchase_user_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="purchaseNumber != null" >
+        purchase_number,
+      </if>
+      <if test="receiveAddress != null" >
+        receive_address,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="purchaseAdditional != null" >
+        purchase_additional,
+      </if>
+      <if test="purchaseStatus != null" >
+        purchase_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="purchaseId != null" >
+        #{purchaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseUserId != null" >
+        #{purchaseUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseNumber != null" >
+        #{purchaseNumber,jdbcType=INTEGER},
+      </if>
+      <if test="receiveAddress != null" >
+        #{receiveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseAdditional != null" >
+        #{purchaseAdditional,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseStatus != null" >
+        #{purchaseStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ear.di.entity.PurchaseInfoExample" resultType="java.lang.Integer" >
+    select count(*) from purchase_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update purchase_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.purchaseId != null" >
+        purchase_id = #{record.purchaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseUserId != null" >
+        purchase_user_id = #{record.purchaseUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseNumber != null" >
+        purchase_number = #{record.purchaseNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.receiveAddress != null" >
+        receive_address = #{record.receiveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalPrice != null" >
+        total_price = #{record.totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.purchaseAdditional != null" >
+        purchase_additional = #{record.purchaseAdditional,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseStatus != null" >
+        purchase_status = #{record.purchaseStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update purchase_info
+    set id = #{record.id,jdbcType=BIGINT},
+      purchase_id = #{record.purchaseId,jdbcType=VARCHAR},
+      purchase_user_id = #{record.purchaseUserId,jdbcType=VARCHAR},
+      goods_id = #{record.goodsId,jdbcType=VARCHAR},
+      purchase_number = #{record.purchaseNumber,jdbcType=INTEGER},
+      receive_address = #{record.receiveAddress,jdbcType=VARCHAR},
+      total_price = #{record.totalPrice,jdbcType=DECIMAL},
+      purchase_additional = #{record.purchaseAdditional,jdbcType=VARCHAR},
+      purchase_status = #{record.purchaseStatus,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ear.di.entity.PurchaseInfo" >
+    update purchase_info
+    <set >
+      <if test="purchaseId != null" >
+        purchase_id = #{purchaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseUserId != null" >
+        purchase_user_id = #{purchaseUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseNumber != null" >
+        purchase_number = #{purchaseNumber,jdbcType=INTEGER},
+      </if>
+      <if test="receiveAddress != null" >
+        receive_address = #{receiveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseAdditional != null" >
+        purchase_additional = #{purchaseAdditional,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseStatus != null" >
+        purchase_status = #{purchaseStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ear.di.entity.PurchaseInfo" >
+    update purchase_info
+    set purchase_id = #{purchaseId,jdbcType=VARCHAR},
+      purchase_user_id = #{purchaseUserId,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=VARCHAR},
+      purchase_number = #{purchaseNumber,jdbcType=INTEGER},
+      receive_address = #{receiveAddress,jdbcType=VARCHAR},
+      total_price = #{totalPrice,jdbcType=DECIMAL},
+      purchase_additional = #{purchaseAdditional,jdbcType=VARCHAR},
+      purchase_status = #{purchaseStatus,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

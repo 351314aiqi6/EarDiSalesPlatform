@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ear.di.dao.KOLPerformInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ear.di.entity.KOLPerformInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="perfor_id" property="perforId" jdbcType="VARCHAR" />
+    <result column="kol_id" property="kolId" jdbcType="VARCHAR" />
+    <result column="merchant_id" property="merchantId" jdbcType="VARCHAR" />
+    <result column="perform_goods_introduce" property="performGoodsIntroduce" jdbcType="VARCHAR" />
+    <result column="perform_url" property="performUrl" jdbcType="VARCHAR" />
+    <result column="apply_number" property="applyNumber" jdbcType="INTEGER" />
+    <result column="perform_start_dttm" property="performStartDttm" jdbcType="TIMESTAMP" />
+    <result column="perform_end_dttm" property="performEndDttm" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, perfor_id, kol_id, merchant_id, perform_goods_introduce, perform_url, apply_number, 
+    perform_start_dttm, perform_end_dttm, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ear.di.entity.KOLPerformInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from kol_perform_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from kol_perform_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from kol_perform_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ear.di.entity.KOLPerformInfoExample" >
+    delete from kol_perform_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ear.di.entity.KOLPerformInfo" >
+    insert into kol_perform_info (id, perfor_id, kol_id, 
+      merchant_id, perform_goods_introduce, perform_url, 
+      apply_number, perform_start_dttm, perform_end_dttm, 
+      create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{perforId,jdbcType=VARCHAR}, #{kolId,jdbcType=VARCHAR}, 
+      #{merchantId,jdbcType=VARCHAR}, #{performGoodsIntroduce,jdbcType=VARCHAR}, #{performUrl,jdbcType=VARCHAR}, 
+      #{applyNumber,jdbcType=INTEGER}, #{performStartDttm,jdbcType=TIMESTAMP}, #{performEndDttm,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ear.di.entity.KOLPerformInfo" >
+    insert into kol_perform_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="perforId != null" >
+        perfor_id,
+      </if>
+      <if test="kolId != null" >
+        kol_id,
+      </if>
+      <if test="merchantId != null" >
+        merchant_id,
+      </if>
+      <if test="performGoodsIntroduce != null" >
+        perform_goods_introduce,
+      </if>
+      <if test="performUrl != null" >
+        perform_url,
+      </if>
+      <if test="applyNumber != null" >
+        apply_number,
+      </if>
+      <if test="performStartDttm != null" >
+        perform_start_dttm,
+      </if>
+      <if test="performEndDttm != null" >
+        perform_end_dttm,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="perforId != null" >
+        #{perforId,jdbcType=VARCHAR},
+      </if>
+      <if test="kolId != null" >
+        #{kolId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="performGoodsIntroduce != null" >
+        #{performGoodsIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="performUrl != null" >
+        #{performUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="applyNumber != null" >
+        #{applyNumber,jdbcType=INTEGER},
+      </if>
+      <if test="performStartDttm != null" >
+        #{performStartDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="performEndDttm != null" >
+        #{performEndDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ear.di.entity.KOLPerformInfoExample" resultType="java.lang.Integer" >
+    select count(*) from kol_perform_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update kol_perform_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.perforId != null" >
+        perfor_id = #{record.perforId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kolId != null" >
+        kol_id = #{record.kolId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantId != null" >
+        merchant_id = #{record.merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.performGoodsIntroduce != null" >
+        perform_goods_introduce = #{record.performGoodsIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.performUrl != null" >
+        perform_url = #{record.performUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyNumber != null" >
+        apply_number = #{record.applyNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.performStartDttm != null" >
+        perform_start_dttm = #{record.performStartDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.performEndDttm != null" >
+        perform_end_dttm = #{record.performEndDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update kol_perform_info
+    set id = #{record.id,jdbcType=BIGINT},
+      perfor_id = #{record.perforId,jdbcType=VARCHAR},
+      kol_id = #{record.kolId,jdbcType=VARCHAR},
+      merchant_id = #{record.merchantId,jdbcType=VARCHAR},
+      perform_goods_introduce = #{record.performGoodsIntroduce,jdbcType=VARCHAR},
+      perform_url = #{record.performUrl,jdbcType=VARCHAR},
+      apply_number = #{record.applyNumber,jdbcType=INTEGER},
+      perform_start_dttm = #{record.performStartDttm,jdbcType=TIMESTAMP},
+      perform_end_dttm = #{record.performEndDttm,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ear.di.entity.KOLPerformInfo" >
+    update kol_perform_info
+    <set >
+      <if test="perforId != null" >
+        perfor_id = #{perforId,jdbcType=VARCHAR},
+      </if>
+      <if test="kolId != null" >
+        kol_id = #{kolId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null" >
+        merchant_id = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="performGoodsIntroduce != null" >
+        perform_goods_introduce = #{performGoodsIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="performUrl != null" >
+        perform_url = #{performUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="applyNumber != null" >
+        apply_number = #{applyNumber,jdbcType=INTEGER},
+      </if>
+      <if test="performStartDttm != null" >
+        perform_start_dttm = #{performStartDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="performEndDttm != null" >
+        perform_end_dttm = #{performEndDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ear.di.entity.KOLPerformInfo" >
+    update kol_perform_info
+    set perfor_id = #{perforId,jdbcType=VARCHAR},
+      kol_id = #{kolId,jdbcType=VARCHAR},
+      merchant_id = #{merchantId,jdbcType=VARCHAR},
+      perform_goods_introduce = #{performGoodsIntroduce,jdbcType=VARCHAR},
+      perform_url = #{performUrl,jdbcType=VARCHAR},
+      apply_number = #{applyNumber,jdbcType=INTEGER},
+      perform_start_dttm = #{performStartDttm,jdbcType=TIMESTAMP},
+      perform_end_dttm = #{performEndDttm,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

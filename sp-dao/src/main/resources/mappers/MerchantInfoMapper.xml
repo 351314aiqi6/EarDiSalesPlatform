@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ear.di.dao.MerchantInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ear.di.entity.MerchantInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="merchant_id" property="merchantId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
+    <result column="chnl_agent_id" property="chnlAgentId" jdbcType="VARCHAR" />
+    <result column="merchant_privat_id" property="merchantPrivatId" jdbcType="VARCHAR" />
+    <result column="merchant_adress" property="merchantAdress" jdbcType="VARCHAR" />
+    <result column="merchant_phone" property="merchantPhone" jdbcType="VARCHAR" />
+    <result column="merchant_email" property="merchantEmail" jdbcType="VARCHAR" />
+    <result column="merchant_status" property="merchantStatus" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, merchant_id, user_id, merchant_name, chnl_agent_id, merchant_privat_id, merchant_adress, 
+    merchant_phone, merchant_email, merchant_status, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ear.di.entity.MerchantInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from merchant_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from merchant_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ear.di.entity.MerchantInfoExample" >
+    delete from merchant_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ear.di.entity.MerchantInfo" >
+    insert into merchant_info (id, merchant_id, user_id, 
+      merchant_name, chnl_agent_id, merchant_privat_id, 
+      merchant_adress, merchant_phone, merchant_email, 
+      merchant_status, create_time, update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{merchantId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{chnlAgentId,jdbcType=VARCHAR}, #{merchantPrivatId,jdbcType=VARCHAR}, 
+      #{merchantAdress,jdbcType=VARCHAR}, #{merchantPhone,jdbcType=VARCHAR}, #{merchantEmail,jdbcType=VARCHAR}, 
+      #{merchantStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ear.di.entity.MerchantInfo" >
+    insert into merchant_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="merchantId != null" >
+        merchant_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="merchantName != null" >
+        merchant_name,
+      </if>
+      <if test="chnlAgentId != null" >
+        chnl_agent_id,
+      </if>
+      <if test="merchantPrivatId != null" >
+        merchant_privat_id,
+      </if>
+      <if test="merchantAdress != null" >
+        merchant_adress,
+      </if>
+      <if test="merchantPhone != null" >
+        merchant_phone,
+      </if>
+      <if test="merchantEmail != null" >
+        merchant_email,
+      </if>
+      <if test="merchantStatus != null" >
+        merchant_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="chnlAgentId != null" >
+        #{chnlAgentId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPrivatId != null" >
+        #{merchantPrivatId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantAdress != null" >
+        #{merchantAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPhone != null" >
+        #{merchantPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantEmail != null" >
+        #{merchantEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantStatus != null" >
+        #{merchantStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ear.di.entity.MerchantInfoExample" resultType="java.lang.Integer" >
+    select count(*) from merchant_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update merchant_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.merchantId != null" >
+        merchant_id = #{record.merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantName != null" >
+        merchant_name = #{record.merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chnlAgentId != null" >
+        chnl_agent_id = #{record.chnlAgentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantPrivatId != null" >
+        merchant_privat_id = #{record.merchantPrivatId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantAdress != null" >
+        merchant_adress = #{record.merchantAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantPhone != null" >
+        merchant_phone = #{record.merchantPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantEmail != null" >
+        merchant_email = #{record.merchantEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantStatus != null" >
+        merchant_status = #{record.merchantStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update merchant_info
+    set id = #{record.id,jdbcType=BIGINT},
+      merchant_id = #{record.merchantId,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      merchant_name = #{record.merchantName,jdbcType=VARCHAR},
+      chnl_agent_id = #{record.chnlAgentId,jdbcType=VARCHAR},
+      merchant_privat_id = #{record.merchantPrivatId,jdbcType=VARCHAR},
+      merchant_adress = #{record.merchantAdress,jdbcType=VARCHAR},
+      merchant_phone = #{record.merchantPhone,jdbcType=VARCHAR},
+      merchant_email = #{record.merchantEmail,jdbcType=VARCHAR},
+      merchant_status = #{record.merchantStatus,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ear.di.entity.MerchantInfo" >
+    update merchant_info
+    <set >
+      <if test="merchantId != null" >
+        merchant_id = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        merchant_name = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="chnlAgentId != null" >
+        chnl_agent_id = #{chnlAgentId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPrivatId != null" >
+        merchant_privat_id = #{merchantPrivatId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantAdress != null" >
+        merchant_adress = #{merchantAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPhone != null" >
+        merchant_phone = #{merchantPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantEmail != null" >
+        merchant_email = #{merchantEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantStatus != null" >
+        merchant_status = #{merchantStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ear.di.entity.MerchantInfo" >
+    update merchant_info
+    set merchant_id = #{merchantId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      merchant_name = #{merchantName,jdbcType=VARCHAR},
+      chnl_agent_id = #{chnlAgentId,jdbcType=VARCHAR},
+      merchant_privat_id = #{merchantPrivatId,jdbcType=VARCHAR},
+      merchant_adress = #{merchantAdress,jdbcType=VARCHAR},
+      merchant_phone = #{merchantPhone,jdbcType=VARCHAR},
+      merchant_email = #{merchantEmail,jdbcType=VARCHAR},
+      merchant_status = #{merchantStatus,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

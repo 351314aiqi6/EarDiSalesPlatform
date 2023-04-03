@@ -35,16 +35,16 @@ public class Result {
         return new Result(0, data, "交易成功");
     }
 
-    public static Result judgeResult(boolean isSuccess , Object data, RespCode respCode) {
-        if(isSuccess){
-            return success( data);
-        }else {
-            return error(data,respCode);
+    public static Result judgeResult(boolean isSuccess, Object data, RespCode respCode) {
+        if (isSuccess) {
+            return success(data);
+        } else {
+            return error(data, respCode);
         }
     }
 
     public static Result error(Object data, BusiException exception) {
-        return error( data, exception.getRespCode());
+        return error(data, exception.getRespCode());
     }
 
 
@@ -69,17 +69,21 @@ public class Result {
         return data;
     }
 
-    public boolean dataIsNummOrEmpty(){
-        if(data == null){
+    public boolean dataIsNummOrEmpty() {
+        if (data == null) {
             return true;
-        }else{
-            if(data instanceof List){
-                return ((List)data).isEmpty();
+        } else {
+            if (data instanceof List) {
+                return ((List) data).isEmpty();
             }
-            if(data instanceof Map){
-                return ((Map)data).isEmpty();
+            if (data instanceof Map) {
+                return ((Map) data).isEmpty();
             }
         }
         return false;
+    }
+
+    public boolean isSuccess() {
+        return code.equals(0);
     }
 }
