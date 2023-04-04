@@ -8,15 +8,13 @@ import com.ear.di.entity.UserApplyPerform;
 import com.ear.di.entity.UserApplyPerformExample;
 import com.ear.di.enums.RespCode;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 直播预约
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/performApply")
 public class PerformApplyController {
     private final UserController userController = SpringUtil.getBean(UserController.class);

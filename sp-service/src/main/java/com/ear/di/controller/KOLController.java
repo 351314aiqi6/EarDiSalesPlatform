@@ -7,12 +7,10 @@ import com.ear.di.entity.KOLInfo;
 import com.ear.di.entity.KOLInfoExample;
 import com.ear.di.enums.RespCode;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/kol")
 public class KOLController {
 

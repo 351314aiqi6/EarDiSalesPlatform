@@ -8,15 +8,13 @@ import com.ear.di.entity.PurchaseInfo;
 import com.ear.di.entity.PurchaseInfoExample;
 import com.ear.di.enums.RespCode;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/purchase")
 public class PurchaseController {
     /**
@@ -53,7 +51,7 @@ public class PurchaseController {
         } else if (userController.getUser(null, userId).dataIsNummOrEmpty()) {
             return Result.error(null, RespCode.USER_IS_NOT_EXIST);
         } else {
-            GoodsInfo goodsInfo = ((List<GoodsInfo>) goods.getData()).get(0);
+            GoodsInfo goodsInfo = ((List<GoodsInfo>) goods.getResult()).get(0);
             if (goodsInfo.getGoodsStock() < Integer.parseInt(purchaseNumber)) {
                 return Result.error(null, RespCode.GOODS_STOCK_NOT_ENOUGH);
             } else {

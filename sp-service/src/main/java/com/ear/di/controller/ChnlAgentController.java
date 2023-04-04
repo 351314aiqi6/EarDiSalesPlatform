@@ -8,15 +8,13 @@ import com.ear.di.entity.ChnlAgentInfo;
 import com.ear.di.entity.ChnlAgentInfoExample;
 import com.ear.di.enums.RespCode;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/chnl")
 public class ChnlAgentController {
 

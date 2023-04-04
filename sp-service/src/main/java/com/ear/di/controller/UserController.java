@@ -1,26 +1,33 @@
 package com.ear.di.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.ear.di.comm.Result;
+import com.ear.di.dao.ChnlAgentInfoMapper;
+import com.ear.di.dao.GoodsInfoMapper;
+import com.ear.di.dao.MerchantInfoMapper;
 import com.ear.di.dao.UserInfoMapper;
-import com.ear.di.entity.UserInfo;
-import com.ear.di.entity.UserInfoExample;
+import com.ear.di.entity.*;
 import com.ear.di.enums.RespCode;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/user")
 public class UserController {
 
     private final UserInfoMapper userInfoMapper = SpringUtil.getBean(UserInfoMapper.class);
+
+    private final GoodsInfoMapper goodsInfoMapper = SpringUtil.getBean(GoodsInfoMapper.class);
+
+    private final MerchantInfoMapper merchantInfoMapper = SpringUtil.getBean(MerchantInfoMapper.class);
+
+    private final ChnlAgentInfoMapper chnlAgentInfoMapper = SpringUtil.getBean(ChnlAgentInfoMapper.class);
+
 
     /**
      * 登录接口
@@ -31,12 +38,44 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
-    public Result login(@RequestParam(name = "userLoginName") String userLoginName,
-                        @RequestParam(name = "userPassword") String userPassword) {
+    public Result login(@RequestParam(name = "userLoginName", required = false) String userLoginName,
+                        @RequestParam(name = "userPassword", required = false) String userPassword) {
         UserInfoExample example = new UserInfoExample();
         example.createCriteria().andUserLoginNameEqualTo(userLoginName).andUserPasswordEqualTo(userPassword);
-        return Result.judgeResult(userInfoMapper.selectByExample(example).size() == 1,
-                null, RespCode.USER_OR_PASSWORD_ERROR);
+        List<UserInfo> userInfos = userInfoMapper.selectByExample(example);
+        if (userInfos.isEmpty()) {
+            return Result.error(null, RespCode.USER_OR_PASSWORD_ERROR);
+        } else {
+            Map<String, Object> dataMap = new HashMap<>();
+            UserInfo userInfo = userInfos.get(0);
+            Long userId = userInfo.getId();
+            // 查询商户数
+            MerchantInfoExample merchantInfoExample = new MerchantInfoExample();
+            merchantInfoExample.createCriteria().andUserIdEqualTo(String.valueOf(userId));
+            List<MerchantInfo> merchantInfos = merchantInfoMapper.selectByExample(merchantInfoExample);
+            dataMap.put("merchantNum", merchantInfos.size());
+            // 查询商品数
+            for (MerchantInfo merchantInfo : merchantInfos) {
+                GoodsInfoExample goodsInfoExample = new GoodsInfoExample();
+                goodsInfoExample.createCriteria().andMerchantIdEqualTo(merchantInfo.getMerchantId());
+                dataMap.put("goodsNum", goodsInfoMapper.countByExample(goodsInfoExample));
+            }
+            // 统计渠道商的数
+            ChnlAgentInfoExample chnlAgentInfoExample = new ChnlAgentInfoExample();
+            chnlAgentInfoExample.createCriteria().andUserIdEqualTo(String.valueOf(userId));
+            dataMap.put("chnlNum", chnlAgentInfoMapper.countByExample(chnlAgentInfoExample));
+            Result result = SpringUtil.getBean(MessageController.class).queryReceive(String.valueOf(userId));
+            List<UserMessage> messageInfos = (List<UserMessage>) result.getResult();
+            List<Map<String, Object>> messageMapList = new ArrayList<>(messageInfos.size());
+            messageInfos.forEach(messageInfo -> {
+                Map<String, Object> stringObjectMap = BeanUtil.beanToMap(messageInfo);
+                stringObjectMap.put("status", !messageInfo.getMessageStatus().equals("00"));
+                messageMapList.add(stringObjectMap);
+            });
+            dataMap.put("messageList", messageMapList);
+            dataMap.put("messageNum", messageInfos.size());
+            return Result.success(dataMap);
+        }
     }
 
     /**

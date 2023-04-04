@@ -8,14 +8,12 @@ import com.ear.di.entity.GoodsInfo;
 import com.ear.di.entity.GoodsInfoExample;
 import com.ear.di.enums.RespCode;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/goods")
 public class GoodsController {
     /**

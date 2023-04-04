@@ -1,7 +1,6 @@
 package com.ear.di.comm;
 
 import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson2.JSON;
 import com.ear.di.enums.RespCode;
 import com.ear.di.exception.BusiException;
 
@@ -22,11 +21,11 @@ public class Result {
     /**
      * 响应数据
      */
-    private final Object data;
+    private final Object result;
 
-    public Result(Integer code, Object data, String message) {
+    public Result(Integer code, Object result, String message) {
         this.code = code;
-        this.data = data;
+        this.result = result;
         this.message = message;
 
     }
@@ -65,19 +64,19 @@ public class Result {
         return message;
     }
 
-    public Object getData() {
-        return data;
+    public Object getResult() {
+        return result;
     }
 
     public boolean dataIsNummOrEmpty() {
-        if (data == null) {
+        if (result == null) {
             return true;
         } else {
-            if (data instanceof List) {
-                return ((List) data).isEmpty();
+            if (result instanceof List) {
+                return ((List) result).isEmpty();
             }
-            if (data instanceof Map) {
-                return ((Map) data).isEmpty();
+            if (result instanceof Map) {
+                return ((Map) result).isEmpty();
             }
         }
         return false;

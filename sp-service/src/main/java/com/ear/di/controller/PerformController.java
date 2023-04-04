@@ -9,16 +9,14 @@ import com.ear.di.entity.KOLPerformInfo;
 import com.ear.di.entity.KOLPerformInfoExample;
 import com.ear.di.enums.RespCode;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/perform")
 public class PerformController {
     private final KOLController kolController = SpringUtil.getBean(KOLController.class);
@@ -48,7 +46,7 @@ public class PerformController {
         if (query.dataIsNummOrEmpty()) {
             return Result.error(null, RespCode.KOL_NOT_EXIST);
         } else {
-            KOLInfo kolInfo = ((List<KOLInfo>) query.getData()).get(0);
+            KOLInfo kolInfo = ((List<KOLInfo>) query.getResult()).get(0);
             KOLPerformInfo performInfo = new KOLPerformInfo();
             performInfo.setKolId(kolInfo.getKolId());
             performInfo.setApplyNumber(0);

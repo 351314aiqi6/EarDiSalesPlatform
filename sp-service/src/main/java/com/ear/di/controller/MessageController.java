@@ -7,12 +7,10 @@ import com.ear.di.entity.UserMessage;
 import com.ear.di.entity.UserMessageExample;
 import com.ear.di.enums.RespCode;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/message")
 public class MessageController {
     /**
@@ -39,7 +37,7 @@ public class MessageController {
      */
     @ResponseBody
     @RequestMapping(value = "/send", method = {RequestMethod.GET, RequestMethod.POST})
-    private Result send(@RequestParam(name = "messageContent") String messageContent,
+    public Result send(@RequestParam(name = "messageContent") String messageContent,
                         @RequestParam(name = "sendUserId") String sendUserId,
                         @RequestParam(name = "receiveUserId") String receiveUserId) {
         if (userController.getUser(null, sendUserId).dataIsNummOrEmpty()
@@ -64,7 +62,7 @@ public class MessageController {
      */
     @ResponseBody
     @RequestMapping(value = "/read", method = {RequestMethod.GET, RequestMethod.POST})
-    private Result read(@RequestParam(name = "messageId") String messageId) {
+    public Result read(@RequestParam(name = "messageId") String messageId) {
         UserMessageExample example = new UserMessageExample();
         example.createCriteria().andMessageIdEqualTo(messageId);
         UserMessage userMessage = new UserMessage();
@@ -81,7 +79,7 @@ public class MessageController {
      */
     @ResponseBody
     @RequestMapping(value = "/querySend", method = {RequestMethod.GET, RequestMethod.POST})
-    private Result querySend(@RequestParam(name = "userId") String userId) {
+    public Result querySend(@RequestParam(name = "userId") String userId) {
         if (userController.getUser(null, userId).dataIsNummOrEmpty()) {
             return Result.error(null, RespCode.USER_IS_NOT_EXIST);
         }
@@ -98,7 +96,7 @@ public class MessageController {
      */
     @ResponseBody
     @RequestMapping(value = "/queryReceive", method = {RequestMethod.GET, RequestMethod.POST})
-    private Result queryReceive(@RequestParam(name = "userId") String userId) {
+    public Result queryReceive(@RequestParam(name = "userId") String userId) {
         if (userController.getUser(null, userId).dataIsNummOrEmpty()) {
             return Result.error(null, RespCode.USER_IS_NOT_EXIST);
         }
@@ -115,7 +113,7 @@ public class MessageController {
      */
     @ResponseBody
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
-    private Result delete(@RequestParam(name = "messageId") String messageId) {
+    public Result delete(@RequestParam(name = "messageId") String messageId) {
         UserMessageExample example = new UserMessageExample();
         example.createCriteria().andMessageIdEqualTo(messageId);
         return Result.success(userMessageMapper.deleteByExample(example));
