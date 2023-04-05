@@ -984,6 +984,66 @@ public class UserInfoExample {
             addCriterion("update_time not between", value1, value2, "updateTime");
             return (Criteria) this;
         }
+
+        public Criteria andUserLastLoginIdIsNull() {
+            addCriterion("user_last_login_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLastLoginIdIsNotNull() {
+            addCriterion("user_last_login_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLastLoginIdEqualTo(Long value) {
+            addCriterion("user_last_login_id =", value, "userLastLoginId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLastLoginIdNotEqualTo(Long value) {
+            addCriterion("user_last_login_id <>", value, "userLastLoginId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLastLoginIdGreaterThan(Long value) {
+            addCriterion("user_last_login_id >", value, "userLastLoginId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLastLoginIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("user_last_login_id >=", value, "userLastLoginId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLastLoginIdLessThan(Long value) {
+            addCriterion("user_last_login_id <", value, "userLastLoginId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLastLoginIdLessThanOrEqualTo(Long value) {
+            addCriterion("user_last_login_id <=", value, "userLastLoginId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLastLoginIdIn(List<Long> values) {
+            addCriterion("user_last_login_id in", values, "userLastLoginId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLastLoginIdNotIn(List<Long> values) {
+            addCriterion("user_last_login_id not in", values, "userLastLoginId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLastLoginIdBetween(Long value1, Long value2) {
+            addCriterion("user_last_login_id between", value1, value2, "userLastLoginId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLastLoginIdNotBetween(Long value1, Long value2) {
+            addCriterion("user_last_login_id not between", value1, value2, "userLastLoginId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

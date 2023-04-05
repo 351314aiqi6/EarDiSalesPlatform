@@ -29,6 +29,8 @@ public class UserInfo {
 
     private Date updateTime;
 
+    private Long userLastLoginId;
+
     public Long getId() {
         return id;
     }
@@ -131,5 +133,13 @@ public class UserInfo {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Long getUserLastLoginId() {
+        return userLastLoginId;
+    }
+
+    public void setUserLastLoginId(Long userLastLoginId) {
+        this.userLastLoginId = userLastLoginId;
     }
 }

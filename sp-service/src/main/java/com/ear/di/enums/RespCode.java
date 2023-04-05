@@ -53,6 +53,7 @@ public enum RespCode {
 
     PERFORM_CANCEL_ERROR("000025", "直播取消失败"),
 
+    PASSWORD_IS_ERROR("000027", "当前密码不正确"),
 
     PERFORM_NOT_EXIST("000026", "直播信息不存在"),
     ;
