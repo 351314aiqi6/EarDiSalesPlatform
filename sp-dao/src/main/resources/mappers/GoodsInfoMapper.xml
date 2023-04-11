@@ -5,6 +5,8 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
     <result column="merchant_id" property="merchantId" jdbcType="VARCHAR" />
+    <result column="chnl_agent_id" property="chnlAgentId" jdbcType="VARCHAR" />
+    <result column="chnl_user_id" property="chnlUserId" jdbcType="VARCHAR" />
     <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
     <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
     <result column="goods_desc" property="goodsDesc" jdbcType="VARCHAR" />
@@ -74,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, goods_id, merchant_id, goods_name, goods_type, goods_desc, goods_price, goods_image, 
-    goods_stock, goods_status, create_time, update_time
+    id, goods_id, merchant_id, chnl_agent_id, chnl_user_id, goods_name, goods_type, goods_desc, 
+    goods_price, goods_image, goods_stock, goods_status, create_time, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ear.di.entity.GoodsInfoExample" >
     select
@@ -109,15 +111,15 @@
   </delete>
   <insert id="insert" parameterType="com.ear.di.entity.GoodsInfo" >
     insert into goods_info (id, goods_id, merchant_id, 
-      goods_name, goods_type, goods_desc, 
-      goods_price, goods_image, goods_stock, 
-      goods_status, create_time, update_time
-      )
+      chnl_agent_id, chnl_user_id, goods_name, 
+      goods_type, goods_desc, goods_price, 
+      goods_image, goods_stock, goods_status, 
+      create_time, update_time)
     values (#{id,jdbcType=BIGINT}, #{goodsId,jdbcType=VARCHAR}, #{merchantId,jdbcType=VARCHAR}, 
-      #{goodsName,jdbcType=VARCHAR}, #{goodsType,jdbcType=VARCHAR}, #{goodsDesc,jdbcType=VARCHAR}, 
-      #{goodsPrice,jdbcType=DECIMAL}, #{goodsImage,jdbcType=VARCHAR}, #{goodsStock,jdbcType=INTEGER}, 
-      #{goodsStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{chnlAgentId,jdbcType=VARCHAR}, #{chnlUserId,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, 
+      #{goodsType,jdbcType=VARCHAR}, #{goodsDesc,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, 
+      #{goodsImage,jdbcType=VARCHAR}, #{goodsStock,jdbcType=INTEGER}, #{goodsStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ear.di.entity.GoodsInfo" >
     insert into goods_info
@@ -130,6 +132,12 @@
       </if>
       <if test="merchantId != null" >
         merchant_id,
+      </if>
+      <if test="chnlAgentId != null" >
+        chnl_agent_id,
+      </if>
+      <if test="chnlUserId != null" >
+        chnl_user_id,
       </if>
       <if test="goodsName != null" >
         goods_name,
@@ -168,6 +176,12 @@
       </if>
       <if test="merchantId != null" >
         #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="chnlAgentId != null" >
+        #{chnlAgentId,jdbcType=VARCHAR},
+      </if>
+      <if test="chnlUserId != null" >
+        #{chnlUserId,jdbcType=VARCHAR},
       </if>
       <if test="goodsName != null" >
         #{goodsName,jdbcType=VARCHAR},
@@ -216,6 +230,12 @@
       <if test="record.merchantId != null" >
         merchant_id = #{record.merchantId,jdbcType=VARCHAR},
       </if>
+      <if test="record.chnlAgentId != null" >
+        chnl_agent_id = #{record.chnlAgentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chnlUserId != null" >
+        chnl_user_id = #{record.chnlUserId,jdbcType=VARCHAR},
+      </if>
       <if test="record.goodsName != null" >
         goods_name = #{record.goodsName,jdbcType=VARCHAR},
       </if>
@@ -253,6 +273,8 @@
     set id = #{record.id,jdbcType=BIGINT},
       goods_id = #{record.goodsId,jdbcType=VARCHAR},
       merchant_id = #{record.merchantId,jdbcType=VARCHAR},
+      chnl_agent_id = #{record.chnlAgentId,jdbcType=VARCHAR},
+      chnl_user_id = #{record.chnlUserId,jdbcType=VARCHAR},
       goods_name = #{record.goodsName,jdbcType=VARCHAR},
       goods_type = #{record.goodsType,jdbcType=VARCHAR},
       goods_desc = #{record.goodsDesc,jdbcType=VARCHAR},
@@ -274,6 +296,12 @@
       </if>
       <if test="merchantId != null" >
         merchant_id = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="chnlAgentId != null" >
+        chnl_agent_id = #{chnlAgentId,jdbcType=VARCHAR},
+      </if>
+      <if test="chnlUserId != null" >
+        chnl_user_id = #{chnlUserId,jdbcType=VARCHAR},
       </if>
       <if test="goodsName != null" >
         goods_name = #{goodsName,jdbcType=VARCHAR},
@@ -309,6 +337,8 @@
     update goods_info
     set goods_id = #{goodsId,jdbcType=VARCHAR},
       merchant_id = #{merchantId,jdbcType=VARCHAR},
+      chnl_agent_id = #{chnlAgentId,jdbcType=VARCHAR},
+      chnl_user_id = #{chnlUserId,jdbcType=VARCHAR},
       goods_name = #{goodsName,jdbcType=VARCHAR},
       goods_type = #{goodsType,jdbcType=VARCHAR},
       goods_desc = #{goodsDesc,jdbcType=VARCHAR},

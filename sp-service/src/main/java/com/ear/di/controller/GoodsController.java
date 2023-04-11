@@ -3,14 +3,20 @@ package com.ear.di.controller;
 import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.ear.di.comm.Result;
+import com.ear.di.dao.ChnlAgentInfoMapper;
 import com.ear.di.dao.GoodsInfoMapper;
-import com.ear.di.entity.GoodsInfo;
-import com.ear.di.entity.GoodsInfoExample;
+import com.ear.di.dao.GoodsTypeMapper;
+import com.ear.di.dao.MerchantInfoMapper;
+import com.ear.di.entity.*;
 import com.ear.di.enums.RespCode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @CrossOrigin
@@ -23,7 +29,16 @@ public class GoodsController {
 
     private final GoodsInfoMapper goodsInfoMapper = SpringUtil.getBean(GoodsInfoMapper.class);
 
+    private final MerchantInfoMapper merchantInfoMapper = SpringUtil.getBean(MerchantInfoMapper.class);
+
     private final MerchantController merchantController = SpringUtil.getBean(MerchantController.class);
+
+    private final GoodsTypeController goodsTypeController = SpringUtil.getBean(GoodsTypeController.class);
+
+    private final GoodsTypeMapper goodsTypeMapper = SpringUtil.getBean(GoodsTypeMapper.class);
+
+    private final ChnlAgentInfoMapper chnlAgentInfoMapper = SpringUtil.getBean(ChnlAgentInfoMapper.class);
+
 
     /**
      * 商品信息添加
@@ -34,40 +49,38 @@ public class GoodsController {
      * @param goodsName  商品名称
      * @param goodsPrice 商品价格
      * @param goodsStock 商品库存
-     * @param goodsType  商品类型
      * @return 交易结果
      */
     @ResponseBody
     @RequestMapping(value = "/add", method = {RequestMethod.GET, RequestMethod.POST})
-    public Result add(@RequestParam(name = "merchantId") String merchantId,
-                      @RequestParam(name = "goodsDesc") String goodsDesc,
-                      @RequestParam(name = "goodsImage") String goodsImage,
-                      @RequestParam(name = "goodsName") String goodsName,
-                      @RequestParam(name = "goodsPrice") String goodsPrice,
-                      @RequestParam(name = "goodsStock") String goodsStock,
-                      @RequestParam(name = "goodsType") String goodsType) {
-
-        if (merchantController.query(null, null, merchantId, null).dataIsNummOrEmpty()) {
+    public Result add(@RequestParam(name = "merchantId") String merchantId, @RequestParam(name = "goodsDesc") String goodsDesc, @RequestParam(name = "goodsImage", required = false) String goodsImage, @RequestParam(name = "goodsName") String goodsName, @RequestParam(name = "goodsPrice") String goodsPrice, @RequestParam(name = "goodsStock") String goodsStock, @RequestParam(name = "goodsTypeId") String goodsTypeId) {
+        MerchantInfoExample example = new MerchantInfoExample();
+        example.createCriteria().andMerchantIdEqualTo(merchantId);
+        List<MerchantInfo> merchantInfos = merchantInfoMapper.selectByExample(example);
+        if (merchantInfos == null || merchantInfos.isEmpty()) {
             return Result.error(null, RespCode.MERCHANT_IS_NOT_EXIST);
         } else {
+            MerchantInfo merchantInfo = merchantInfos.get(0);
             GoodsInfo goodsInfo = new GoodsInfo();
             goodsInfo.setGoodsDesc(goodsDesc);
             goodsInfo.setGoodsImage(goodsImage);
             goodsInfo.setGoodsName(goodsName);
             goodsInfo.setGoodsStatus(ACTIVE);
-            goodsInfo.setGoodsType(goodsType);
+            goodsInfo.setChnlAgentId(merchantInfo.getChnlAgentId());
+            goodsInfo.setChnlUserId(merchantInfo.getUserId());
+            goodsInfo.setGoodsType(goodsTypeId);
             goodsInfo.setMerchantId(merchantId);
             goodsInfo.setGoodsPrice(new BigDecimal(goodsPrice));
             goodsInfo.setGoodsStock(Integer.parseInt(goodsStock));
             goodsInfo.setGoodsId(String.valueOf(System.currentTimeMillis()));
-            return Result.judgeResult(goodsInfoMapper.insertSelective(goodsInfo) == 1, goodsInfo, RespCode.ADD_GOODS_ERROR);
+            return Result.judgeResult(goodsInfoMapper.insertSelective(goodsInfo) == 1 && goodsTypeController.addGoods(goodsTypeId, 1L).isSuccess(), goodsInfo, RespCode.ADD_GOODS_ERROR);
         }
     }
 
     /**
      * 商品信息修改
      *
-     * @param goodsId    商品ID
+     * @param id         商品ID
      * @param goodsDesc  商品描述
      * @param goodsImage 商品图片链接
      * @param goodsName  商品名称
@@ -78,34 +91,21 @@ public class GoodsController {
      */
     @ResponseBody
     @RequestMapping(value = "/update", method = {RequestMethod.GET, RequestMethod.POST})
-    public Result update(@RequestParam(name = "goodsId") String goodsId,
-                         @RequestParam(name = "goodsDesc", required = false) String goodsDesc,
-                         @RequestParam(name = "goodsImage", required = false) String goodsImage,
-                         @RequestParam(name = "goodsName", required = false) String goodsName,
-                         @RequestParam(name = "goodsPrice", required = false) String goodsPrice,
-                         @RequestParam(name = "goodsStock", required = false) String goodsStock,
-                         @RequestParam(name = "goodsType", required = false) String goodsType,
-                         @RequestParam(name = "goodsStatus", required = false) String goodsStatus) {
-
-        if (this.query(null, goodsId, null).dataIsNummOrEmpty()) {
-            return Result.error(null, RespCode.GOODS_IS_NOT_EXIST);
-        } else {
-            GoodsInfoExample example = new GoodsInfoExample();
-            example.createCriteria().andGoodsIdEqualTo(goodsId);
-            GoodsInfo goodsInfo = new GoodsInfo();
-            goodsInfo.setGoodsDesc(goodsDesc);
-            goodsInfo.setGoodsImage(goodsImage);
-            goodsInfo.setGoodsName(goodsName);
-            goodsInfo.setGoodsStatus(goodsStatus);
-            goodsInfo.setGoodsType(goodsType);
-            if (goodsPrice != null) {
-                goodsInfo.setGoodsPrice(new BigDecimal(goodsPrice));
-            }
-            if (goodsStock != null) {
-                goodsInfo.setGoodsStock(Integer.parseInt(goodsStock));
-            }
-            return Result.judgeResult(goodsInfoMapper.updateByExampleSelective(goodsInfo, example) == 1, goodsInfo, RespCode.MERCHANT_UPDATE_ERROR);
+    public Result update(@RequestParam(name = "id") String id, @RequestParam(name = "goodsDesc", required = false) String goodsDesc, @RequestParam(name = "goodsImage", required = false) String goodsImage, @RequestParam(name = "goodsName", required = false) String goodsName, @RequestParam(name = "goodsPrice", required = false) String goodsPrice, @RequestParam(name = "goodsStock", required = false) String goodsStock, @RequestParam(name = "goodsType", required = false) String goodsType, @RequestParam(name = "goodsStatus", required = false) String goodsStatus) {
+        GoodsInfo goodsInfo = new GoodsInfo();
+        goodsInfo.setId(Long.parseLong(id));
+        goodsInfo.setGoodsDesc(goodsDesc);
+        goodsInfo.setGoodsImage(goodsImage);
+        goodsInfo.setGoodsName(goodsName);
+        goodsInfo.setGoodsStatus(goodsStatus);
+        goodsInfo.setGoodsType(goodsType);
+        if (goodsPrice != null) {
+            goodsInfo.setGoodsPrice(new BigDecimal(goodsPrice));
         }
+        if (goodsStock != null) {
+            goodsInfo.setGoodsStock(Integer.parseInt(goodsStock));
+        }
+        return Result.judgeResult(goodsInfoMapper.updateByPrimaryKeySelective(goodsInfo) == 1, goodsInfo, RespCode.GOODS_IS_NOT_EXIST);
     }
 
     /**
@@ -118,10 +118,13 @@ public class GoodsController {
      */
     @ResponseBody
     @RequestMapping(value = "/query", method = {RequestMethod.GET, RequestMethod.POST})
-    public Result query(@RequestParam(name = "merchantId", required = false) String merchantId,
-                        @RequestParam(name = "goodsId", required = false) String goodsId,
-                        @RequestParam(name = "goodsStatus", required = false) String goodsStatus) {
-
+    public Result query(@RequestParam(name = "merchantId", required = false) String merchantId, @RequestParam(name = "goodsId", required = false) String goodsId, @RequestParam(name = "userId", required = false) String userId, @RequestParam(name = "chnlAgentId", required = false) String chnlAgentId, @RequestParam(name = "goodsTypeId", required = false) String goodsTypeId, @RequestParam(name = "goodsStatus", required = false) String goodsStatus, @RequestParam(name = "pageSize", required = false) String pageSize, @RequestParam(name = "pageIndex", required = false) String pageIndex) {
+        if (StringUtils.isBlank(pageSize)) {
+            pageSize = "5";
+        }
+        if (StringUtils.isBlank(pageIndex)) {
+            pageIndex = "1";
+        }
         if (merchantController.query(null, null, merchantId, null).dataIsNummOrEmpty()) {
             return Result.error(null, RespCode.MERCHANT_IS_NOT_EXIST);
         } else {
@@ -133,10 +136,125 @@ public class GoodsController {
             if (StringUtils.isNotBlank(goodsId)) {
                 criteria.andGoodsIdEqualTo(goodsId);
             }
+            if (StringUtils.isNotBlank(userId)) {
+                criteria.andChnlUserIdEqualTo(userId);
+            }
+            if (StringUtils.isNotBlank(chnlAgentId)) {
+                criteria.andChnlAgentIdEqualTo(chnlAgentId);
+            }
+            if (StringUtils.isNotBlank(goodsTypeId)) {
+                criteria.andGoodsTypeEqualTo(goodsTypeId);
+            }
             if (StringUtils.isNotBlank(goodsStatus)) {
                 criteria.andGoodsStatusEqualTo(goodsStatus);
             }
-            return Result.success(goodsInfoMapper.selectByExample(example));
+            List<GoodsInfo> goodsInfos = goodsInfoMapper.selectByExample(example);
+            Map<String, Object> dataMap = new HashMap<>();
+            int end = Integer.parseInt(pageIndex) * Integer.parseInt(pageSize);
+            int start = (Integer.parseInt(pageIndex) - 1) * Integer.parseInt(pageSize);
+            if (end > goodsInfos.size()) {
+                end = goodsInfos.size();
+            }
+            dataMap.put("goodsList", goodsInfos.subList(start, end));
+            dataMap.put("totalSize", goodsInfos.size());
+            return Result.success(dataMap);
         }
+    }
+
+    /**
+     * 商户信息删除
+     *
+     * @param id 商户ID
+     * @return 交易结果
+     */
+    @ResponseBody
+    @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
+    public Result delete(@RequestParam(name = "id") String id, @RequestParam(name = "goodsType") String goodsType) {
+        return Result.judgeResult(goodsInfoMapper.deleteByPrimaryKey(Long.parseLong(id)) == 1 && goodsTypeController.addGoods(goodsType, -1L).isSuccess(), null, RespCode.GOODS_UPDATE_ERROR);
+    }
+
+    /**
+     * 商品检索
+     *
+     * @return 商品检索结果
+     */
+    @ResponseBody
+    @RequestMapping(value = "/selectGoods", method = {RequestMethod.GET, RequestMethod.POST})
+    public Result selectGoods(@RequestParam(name = "selectType") String selectType) {
+        List<Map<String, Object>> goodsOptions = new ArrayList<>();
+        if (selectType.equals("01")) {
+            List<GoodsType> goodsTypes = goodsTypeMapper.selectByExample(new GoodsTypeExample());
+            for (GoodsType goodsType : goodsTypes) {
+                Map<String, Object> goodsOption = new HashMap<>();
+                goodsOption.put("value", goodsType.getGoodsTypeId());
+                goodsOption.put("label", goodsType.getGoodsTypeName());
+                GoodsInfoExample goodsInfoExample = new GoodsInfoExample();
+                goodsInfoExample.createCriteria().andGoodsTypeEqualTo(goodsType.getGoodsTypeId());
+                List<GoodsInfo> goodsInfos = goodsInfoMapper.selectByExample(goodsInfoExample);
+                if (!goodsInfos.isEmpty()) {
+                    List<Map<String, Object>> goodsInfoList = new ArrayList<>();
+                    for (GoodsInfo goodsInfo : goodsInfos) {
+                        Map<String, Object> goods = new HashMap<>();
+                        goods.put("value", goodsInfo.getId());
+                        goods.put("label", goodsInfo.getGoodsName());
+                        goodsInfoList.add(goods);
+                    }
+                    goodsOption.put("children", goodsInfoList);
+                } else {
+                    break;
+                }
+                // 放入到商品中
+                goodsOptions.add(goodsOption);
+            }
+        } else {
+            List<ChnlAgentInfo> chnlAgentInfoList = chnlAgentInfoMapper.selectByExample(new ChnlAgentInfoExample());
+            for (ChnlAgentInfo chnlAgentInfo : chnlAgentInfoList) {
+                MerchantInfoExample merchantInfoExample = new MerchantInfoExample();
+                merchantInfoExample.createCriteria().andChnlAgentIdEqualTo(chnlAgentInfo.getChnlAgentId());
+                List<MerchantInfo> merchantInfoList = merchantInfoMapper.selectByExample(merchantInfoExample);
+                Map<String, Object> chnlOption = new HashMap<>();
+                List<Map<String, Object>> children = new ArrayList<>();
+                chnlOption.put("value", chnlAgentInfo.getChnlAgentId());
+                chnlOption.put("label", chnlAgentInfo.getChnlAgentName());
+                chnlOption.put("children", children);
+                for (MerchantInfo merchantInfo : merchantInfoList) {
+                    Map<String, Object> merchantOption = new HashMap<>();
+                    merchantOption.put("value", merchantInfo.getMerchantId());
+                    merchantOption.put("label", merchantInfo.getMerchantName());
+                    List<Map<String, Object>> merchantChildren = new ArrayList<>();
+                    merchantOption.put("children", merchantChildren);
+                    GoodsInfoExample goodsInfoExample = new GoodsInfoExample();
+                    goodsInfoExample.createCriteria().andMerchantIdEqualTo(merchantInfo.getMerchantId());
+                    List<GoodsInfo> goodsInfoList = goodsInfoMapper.selectByExample(goodsInfoExample);
+                    for (GoodsInfo goodsInfo : goodsInfoList) {
+                        Map<String, Object> goodsOption = new HashMap<>();
+                        merchantChildren.add(goodsOption);
+                        goodsOption.put("value", goodsInfo.getId());
+                        goodsOption.put("label", goodsInfo.getGoodsName());
+                    }
+                    if (!merchantChildren.isEmpty()) {
+                        // 商户选项放入渠道商户
+                        children.add(merchantOption);
+                    }
+                }
+                if (!children.isEmpty()) {
+                    // 放入到商品中
+                    goodsOptions.add(chnlOption);
+                }
+            }
+        }
+        return Result.success(goodsOptions);
+    }
+
+    /**
+     * 商品信息查询
+     *
+     * @param id 商品ID
+     * @return 交易结果
+     */
+    @ResponseBody
+    @RequestMapping(value = "/queryOne", method = {RequestMethod.GET, RequestMethod.POST})
+    public Result queryOne(@RequestParam(name = "id") String id) {
+        return Result.success(goodsInfoMapper.selectByPrimaryKey(Long.parseLong(id)));
     }
 }

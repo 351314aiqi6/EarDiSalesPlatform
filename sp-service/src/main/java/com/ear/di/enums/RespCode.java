@@ -56,6 +56,8 @@ public enum RespCode {
     PASSWORD_IS_ERROR("000027", "当前密码不正确"),
 
     PERFORM_NOT_EXIST("000026", "直播信息不存在"),
+
+    PERFORM_START_DTTM_ILLEGAL("000027", "直播开始时间不能早已当前时间"),
     ;
 
     RespCode(String respCode, String respMessage) {

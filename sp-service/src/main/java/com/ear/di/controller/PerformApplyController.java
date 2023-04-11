@@ -37,18 +37,19 @@ public class PerformApplyController {
     @RequestMapping(value = "/apply", method = {RequestMethod.GET, RequestMethod.POST})
     public Result apply(@RequestParam(name = "userId") String userId,
                         @RequestParam(name = "performId") String performId) {
-        if (userController.getUser(null, userId).dataIsNummOrEmpty()) {
-            return Result.error(null, RespCode.USER_IS_NOT_EXIST);
-        } else if (performController.query(performId, null).dataIsNummOrEmpty()) {
-            return Result.error(null, RespCode.PERFORM_NOT_EXIST);
-        } else {
-            UserApplyPerform userApplyPerform = new UserApplyPerform();
-            userApplyPerform.setUserId(userId);
-            userApplyPerform.setPerformId(performId);
-            userApplyPerform.setApplyStatus(EFFECTIVE);
-            userApplyPerform.setApplyId(String.valueOf(System.currentTimeMillis()));
-            return Result.judgeResult(userApplyPerformMapper.insertSelective(userApplyPerform) == 1, userApplyPerform, RespCode.PERFORM_APPLY_ERROR);
-        }
+//        if (userController.getUser(null, userId).dataIsNummOrEmpty()) {
+//            return Result.error(null, RespCode.USER_IS_NOT_EXIST);
+//        } else if (performController.query(performId, null).dataIsNummOrEmpty()) {
+//            return Result.error(null, RespCode.PERFORM_NOT_EXIST);
+//        } else {
+//            UserApplyPerform userApplyPerform = new UserApplyPerform();
+//            userApplyPerform.setUserId(userId);
+//            userApplyPerform.setPerformId(performId);
+//            userApplyPerform.setApplyStatus(EFFECTIVE);
+//            userApplyPerform.setApplyId(String.valueOf(System.currentTimeMillis()));
+//            return Result.judgeResult(userApplyPerformMapper.insertSelective(userApplyPerform) == 1, userApplyPerform, RespCode.PERFORM_APPLY_ERROR);
+//        }
+        return null;
     }
 
     @ResponseBody

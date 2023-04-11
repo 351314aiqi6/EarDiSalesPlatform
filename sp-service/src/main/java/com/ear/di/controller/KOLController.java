@@ -9,6 +9,8 @@ import com.ear.di.enums.RespCode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @CrossOrigin
 @RequestMapping("/kol")
@@ -21,17 +23,17 @@ public class KOLController {
     /**
      * 主播注册
      *
-     * @param kolAvatar    主播头像
-     * @param kolIntroduce 主播介绍
-     * @param kolName      主播名称
-     * @param kolFollowers 主播粉丝
+     * @param performPlatform 直播平台
+     * @param kolIntroduce    主播介绍
+     * @param kolName         主播名称
+     * @param kolFollowers    主播粉丝
      * @return 注册结果
      */
     @ResponseBody
     @RequestMapping(value = "/register", method = {RequestMethod.GET, RequestMethod.POST})
     public Result register(@RequestParam(name = "userId") String userId,
-                           @RequestParam(name = "kolAvatar") String kolAvatar,
                            @RequestParam(name = "kolIntroduce") String kolIntroduce,
+                           @RequestParam(name = "performPlatform") String performPlatform,
                            @RequestParam(name = "kolName") String kolName,
                            @RequestParam(name = "kolFollowers") String kolFollowers) {
         if (userController.getUser(null, userId).dataIsNummOrEmpty()) {
@@ -41,9 +43,12 @@ public class KOLController {
         } else {
             KOLInfo kolInfo = new KOLInfo();
             kolInfo.setUserId(userId);
-            kolInfo.setKolAvatar(kolAvatar);
             kolInfo.setKolIntroduce(kolIntroduce);
             kolInfo.setKolName(kolName);
+            kolInfo.setPerformNumber(0L);
+            kolInfo.setPrePerformNumber(0L);
+            kolInfo.setPerformViewerNumber(0L);
+            kolInfo.setPerformPlatform(performPlatform);
             kolInfo.setKolFollowers(Integer.parseInt(kolFollowers));
             kolInfo.setKolId(String.valueOf(System.currentTimeMillis()));
             return Result.judgeResult(kolInfoMapper.insertSelective(kolInfo) == 1, kolInfo, RespCode.REGISTER_KOL_ERROR);
@@ -61,7 +66,21 @@ public class KOLController {
     public Result query(@RequestParam(name = "userId", required = false) String userId) {
         KOLInfoExample example = new KOLInfoExample();
         example.createCriteria().andUserIdEqualTo(userId);
-        return Result.success(kolInfoMapper.selectByExample(example));
+        List<KOLInfo> kolInfos = kolInfoMapper.selectByExample(example);
+        if (kolInfos.isEmpty()) {
+            return Result.success(null);
+        }
+        return Result.success(kolInfos.get(0));
+    }
+
+    /**
+     * 主播信息查询
+     * @return 查询结果
+     */
+    @ResponseBody
+    @RequestMapping(value = "/queryAll", method = {RequestMethod.GET, RequestMethod.POST})
+    public Result queryAll() {
+        return Result.success(kolInfoMapper.selectByExample(new KOLInfoExample()));
     }
 
     /**

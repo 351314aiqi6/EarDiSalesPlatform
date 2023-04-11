@@ -7,17 +7,19 @@ public class UserMessage {
 
     private String messageId;
 
+    private String messageTitle;
+
     private String sendUserId;
 
     private String recvUserId;
-
-    private String messageContent;
 
     private String messageStatus;
 
     private Date createTime;
 
     private Date updateTime;
+
+    private String messageContent;
 
     public Long getId() {
         return id;
@@ -35,6 +37,14 @@ public class UserMessage {
         this.messageId = messageId == null ? null : messageId.trim();
     }
 
+    public String getMessageTitle() {
+        return messageTitle;
+    }
+
+    public void setMessageTitle(String messageTitle) {
+        this.messageTitle = messageTitle == null ? null : messageTitle.trim();
+    }
+
     public String getSendUserId() {
         return sendUserId;
     }
@@ -49,14 +59,6 @@ public class UserMessage {
 
     public void setRecvUserId(String recvUserId) {
         this.recvUserId = recvUserId == null ? null : recvUserId.trim();
-    }
-
-    public String getMessageContent() {
-        return messageContent;
-    }
-
-    public void setMessageContent(String messageContent) {
-        this.messageContent = messageContent == null ? null : messageContent.trim();
     }
 
     public String getMessageStatus() {
@@ -81,5 +83,13 @@ public class UserMessage {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getMessageContent() {
+        return messageContent;
+    }
+
+    public void setMessageContent(String messageContent) {
+        this.messageContent = messageContent == null ? null : messageContent.trim();
     }
 }

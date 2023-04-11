@@ -375,6 +375,256 @@ public class KOLInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andPerformPlatformIsNull() {
+            addCriterion("perform_platform is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformIsNotNull() {
+            addCriterion("perform_platform is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformEqualTo(String value) {
+            addCriterion("perform_platform =", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformNotEqualTo(String value) {
+            addCriterion("perform_platform <>", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformGreaterThan(String value) {
+            addCriterion("perform_platform >", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformGreaterThanOrEqualTo(String value) {
+            addCriterion("perform_platform >=", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformLessThan(String value) {
+            addCriterion("perform_platform <", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformLessThanOrEqualTo(String value) {
+            addCriterion("perform_platform <=", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformLike(String value) {
+            addCriterion("perform_platform like", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformNotLike(String value) {
+            addCriterion("perform_platform not like", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformIn(List<String> values) {
+            addCriterion("perform_platform in", values, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformNotIn(List<String> values) {
+            addCriterion("perform_platform not in", values, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformBetween(String value1, String value2) {
+            addCriterion("perform_platform between", value1, value2, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformNotBetween(String value1, String value2) {
+            addCriterion("perform_platform not between", value1, value2, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformNumberIsNull() {
+            addCriterion("perform_number is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformNumberIsNotNull() {
+            addCriterion("perform_number is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformNumberEqualTo(Long value) {
+            addCriterion("perform_number =", value, "performNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformNumberNotEqualTo(Long value) {
+            addCriterion("perform_number <>", value, "performNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformNumberGreaterThan(Long value) {
+            addCriterion("perform_number >", value, "performNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformNumberGreaterThanOrEqualTo(Long value) {
+            addCriterion("perform_number >=", value, "performNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformNumberLessThan(Long value) {
+            addCriterion("perform_number <", value, "performNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformNumberLessThanOrEqualTo(Long value) {
+            addCriterion("perform_number <=", value, "performNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformNumberIn(List<Long> values) {
+            addCriterion("perform_number in", values, "performNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformNumberNotIn(List<Long> values) {
+            addCriterion("perform_number not in", values, "performNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformNumberBetween(Long value1, Long value2) {
+            addCriterion("perform_number between", value1, value2, "performNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformNumberNotBetween(Long value1, Long value2) {
+            addCriterion("perform_number not between", value1, value2, "performNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrePerformNumberIsNull() {
+            addCriterion("pre_perform_number is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrePerformNumberIsNotNull() {
+            addCriterion("pre_perform_number is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrePerformNumberEqualTo(Long value) {
+            addCriterion("pre_perform_number =", value, "prePerformNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrePerformNumberNotEqualTo(Long value) {
+            addCriterion("pre_perform_number <>", value, "prePerformNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrePerformNumberGreaterThan(Long value) {
+            addCriterion("pre_perform_number >", value, "prePerformNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrePerformNumberGreaterThanOrEqualTo(Long value) {
+            addCriterion("pre_perform_number >=", value, "prePerformNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrePerformNumberLessThan(Long value) {
+            addCriterion("pre_perform_number <", value, "prePerformNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrePerformNumberLessThanOrEqualTo(Long value) {
+            addCriterion("pre_perform_number <=", value, "prePerformNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrePerformNumberIn(List<Long> values) {
+            addCriterion("pre_perform_number in", values, "prePerformNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrePerformNumberNotIn(List<Long> values) {
+            addCriterion("pre_perform_number not in", values, "prePerformNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrePerformNumberBetween(Long value1, Long value2) {
+            addCriterion("pre_perform_number between", value1, value2, "prePerformNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrePerformNumberNotBetween(Long value1, Long value2) {
+            addCriterion("pre_perform_number not between", value1, value2, "prePerformNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformViewerNumberIsNull() {
+            addCriterion("perform_viewer_number is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformViewerNumberIsNotNull() {
+            addCriterion("perform_viewer_number is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformViewerNumberEqualTo(Long value) {
+            addCriterion("perform_viewer_number =", value, "performViewerNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformViewerNumberNotEqualTo(Long value) {
+            addCriterion("perform_viewer_number <>", value, "performViewerNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformViewerNumberGreaterThan(Long value) {
+            addCriterion("perform_viewer_number >", value, "performViewerNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformViewerNumberGreaterThanOrEqualTo(Long value) {
+            addCriterion("perform_viewer_number >=", value, "performViewerNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformViewerNumberLessThan(Long value) {
+            addCriterion("perform_viewer_number <", value, "performViewerNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformViewerNumberLessThanOrEqualTo(Long value) {
+            addCriterion("perform_viewer_number <=", value, "performViewerNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformViewerNumberIn(List<Long> values) {
+            addCriterion("perform_viewer_number in", values, "performViewerNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformViewerNumberNotIn(List<Long> values) {
+            addCriterion("perform_viewer_number not in", values, "performViewerNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformViewerNumberBetween(Long value1, Long value2) {
+            addCriterion("perform_viewer_number between", value1, value2, "performViewerNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformViewerNumberNotBetween(Long value1, Long value2) {
+            addCriterion("perform_viewer_number not between", value1, value2, "performViewerNumber");
+            return (Criteria) this;
+        }
+
         public Criteria andKolAvatarIsNull() {
             addCriterion("kol_avatar is null");
             return (Criteria) this;

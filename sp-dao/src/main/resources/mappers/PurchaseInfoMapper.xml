@@ -5,10 +5,13 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="purchase_id" property="purchaseId" jdbcType="VARCHAR" />
     <result column="purchase_user_id" property="purchaseUserId" jdbcType="VARCHAR" />
+    <result column="payee_user_id" property="payeeUserId" jdbcType="VARCHAR" />
     <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
     <result column="purchase_number" property="purchaseNumber" jdbcType="INTEGER" />
-    <result column="receive_address" property="receiveAddress" jdbcType="VARCHAR" />
     <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+    <result column="receive_address" property="receiveAddress" jdbcType="VARCHAR" />
+    <result column="receive_name" property="receiveName" jdbcType="VARCHAR" />
+    <result column="receive_phone" property="receivePhone" jdbcType="VARCHAR" />
     <result column="purchase_additional" property="purchaseAdditional" jdbcType="VARCHAR" />
     <result column="purchase_status" property="purchaseStatus" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -73,8 +76,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, purchase_id, purchase_user_id, goods_id, purchase_number, receive_address, total_price, 
-    purchase_additional, purchase_status, create_time, update_time
+    id, purchase_id, purchase_user_id, payee_user_id, goods_id, purchase_number, total_price, 
+    receive_address, receive_name, receive_phone, purchase_additional, purchase_status, 
+    create_time, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ear.di.entity.PurchaseInfoExample" >
     select
@@ -108,12 +112,14 @@
   </delete>
   <insert id="insert" parameterType="com.ear.di.entity.PurchaseInfo" >
     insert into purchase_info (id, purchase_id, purchase_user_id, 
-      goods_id, purchase_number, receive_address, 
-      total_price, purchase_additional, purchase_status, 
+      payee_user_id, goods_id, purchase_number, 
+      total_price, receive_address, receive_name, 
+      receive_phone, purchase_additional, purchase_status, 
       create_time, update_time)
     values (#{id,jdbcType=BIGINT}, #{purchaseId,jdbcType=VARCHAR}, #{purchaseUserId,jdbcType=VARCHAR}, 
-      #{goodsId,jdbcType=VARCHAR}, #{purchaseNumber,jdbcType=INTEGER}, #{receiveAddress,jdbcType=VARCHAR}, 
-      #{totalPrice,jdbcType=DECIMAL}, #{purchaseAdditional,jdbcType=VARCHAR}, #{purchaseStatus,jdbcType=VARCHAR}, 
+      #{payeeUserId,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, #{purchaseNumber,jdbcType=INTEGER}, 
+      #{totalPrice,jdbcType=DECIMAL}, #{receiveAddress,jdbcType=VARCHAR}, #{receiveName,jdbcType=VARCHAR}, 
+      #{receivePhone,jdbcType=VARCHAR}, #{purchaseAdditional,jdbcType=VARCHAR}, #{purchaseStatus,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ear.di.entity.PurchaseInfo" >
@@ -128,17 +134,26 @@
       <if test="purchaseUserId != null" >
         purchase_user_id,
       </if>
+      <if test="payeeUserId != null" >
+        payee_user_id,
+      </if>
       <if test="goodsId != null" >
         goods_id,
       </if>
       <if test="purchaseNumber != null" >
         purchase_number,
       </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
       <if test="receiveAddress != null" >
         receive_address,
       </if>
-      <if test="totalPrice != null" >
-        total_price,
+      <if test="receiveName != null" >
+        receive_name,
+      </if>
+      <if test="receivePhone != null" >
+        receive_phone,
       </if>
       <if test="purchaseAdditional != null" >
         purchase_additional,
@@ -163,17 +178,26 @@
       <if test="purchaseUserId != null" >
         #{purchaseUserId,jdbcType=VARCHAR},
       </if>
+      <if test="payeeUserId != null" >
+        #{payeeUserId,jdbcType=VARCHAR},
+      </if>
       <if test="goodsId != null" >
         #{goodsId,jdbcType=VARCHAR},
       </if>
       <if test="purchaseNumber != null" >
         #{purchaseNumber,jdbcType=INTEGER},
       </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
       <if test="receiveAddress != null" >
         #{receiveAddress,jdbcType=VARCHAR},
       </if>
-      <if test="totalPrice != null" >
-        #{totalPrice,jdbcType=DECIMAL},
+      <if test="receiveName != null" >
+        #{receiveName,jdbcType=VARCHAR},
+      </if>
+      <if test="receivePhone != null" >
+        #{receivePhone,jdbcType=VARCHAR},
       </if>
       <if test="purchaseAdditional != null" >
         #{purchaseAdditional,jdbcType=VARCHAR},
@@ -207,17 +231,26 @@
       <if test="record.purchaseUserId != null" >
         purchase_user_id = #{record.purchaseUserId,jdbcType=VARCHAR},
       </if>
+      <if test="record.payeeUserId != null" >
+        payee_user_id = #{record.payeeUserId,jdbcType=VARCHAR},
+      </if>
       <if test="record.goodsId != null" >
         goods_id = #{record.goodsId,jdbcType=VARCHAR},
       </if>
       <if test="record.purchaseNumber != null" >
         purchase_number = #{record.purchaseNumber,jdbcType=INTEGER},
       </if>
+      <if test="record.totalPrice != null" >
+        total_price = #{record.totalPrice,jdbcType=DECIMAL},
+      </if>
       <if test="record.receiveAddress != null" >
         receive_address = #{record.receiveAddress,jdbcType=VARCHAR},
       </if>
-      <if test="record.totalPrice != null" >
-        total_price = #{record.totalPrice,jdbcType=DECIMAL},
+      <if test="record.receiveName != null" >
+        receive_name = #{record.receiveName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receivePhone != null" >
+        receive_phone = #{record.receivePhone,jdbcType=VARCHAR},
       </if>
       <if test="record.purchaseAdditional != null" >
         purchase_additional = #{record.purchaseAdditional,jdbcType=VARCHAR},
@@ -241,10 +274,13 @@
     set id = #{record.id,jdbcType=BIGINT},
       purchase_id = #{record.purchaseId,jdbcType=VARCHAR},
       purchase_user_id = #{record.purchaseUserId,jdbcType=VARCHAR},
+      payee_user_id = #{record.payeeUserId,jdbcType=VARCHAR},
       goods_id = #{record.goodsId,jdbcType=VARCHAR},
       purchase_number = #{record.purchaseNumber,jdbcType=INTEGER},
-      receive_address = #{record.receiveAddress,jdbcType=VARCHAR},
       total_price = #{record.totalPrice,jdbcType=DECIMAL},
+      receive_address = #{record.receiveAddress,jdbcType=VARCHAR},
+      receive_name = #{record.receiveName,jdbcType=VARCHAR},
+      receive_phone = #{record.receivePhone,jdbcType=VARCHAR},
       purchase_additional = #{record.purchaseAdditional,jdbcType=VARCHAR},
       purchase_status = #{record.purchaseStatus,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -262,17 +298,26 @@
       <if test="purchaseUserId != null" >
         purchase_user_id = #{purchaseUserId,jdbcType=VARCHAR},
       </if>
+      <if test="payeeUserId != null" >
+        payee_user_id = #{payeeUserId,jdbcType=VARCHAR},
+      </if>
       <if test="goodsId != null" >
         goods_id = #{goodsId,jdbcType=VARCHAR},
       </if>
       <if test="purchaseNumber != null" >
         purchase_number = #{purchaseNumber,jdbcType=INTEGER},
       </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
       <if test="receiveAddress != null" >
         receive_address = #{receiveAddress,jdbcType=VARCHAR},
       </if>
-      <if test="totalPrice != null" >
-        total_price = #{totalPrice,jdbcType=DECIMAL},
+      <if test="receiveName != null" >
+        receive_name = #{receiveName,jdbcType=VARCHAR},
+      </if>
+      <if test="receivePhone != null" >
+        receive_phone = #{receivePhone,jdbcType=VARCHAR},
       </if>
       <if test="purchaseAdditional != null" >
         purchase_additional = #{purchaseAdditional,jdbcType=VARCHAR},
@@ -293,10 +338,13 @@
     update purchase_info
     set purchase_id = #{purchaseId,jdbcType=VARCHAR},
       purchase_user_id = #{purchaseUserId,jdbcType=VARCHAR},
+      payee_user_id = #{payeeUserId,jdbcType=VARCHAR},
       goods_id = #{goodsId,jdbcType=VARCHAR},
       purchase_number = #{purchaseNumber,jdbcType=INTEGER},
-      receive_address = #{receiveAddress,jdbcType=VARCHAR},
       total_price = #{totalPrice,jdbcType=DECIMAL},
+      receive_address = #{receiveAddress,jdbcType=VARCHAR},
+      receive_name = #{receiveName,jdbcType=VARCHAR},
+      receive_phone = #{receivePhone,jdbcType=VARCHAR},
       purchase_additional = #{purchaseAdditional,jdbcType=VARCHAR},
       purchase_status = #{purchaseStatus,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

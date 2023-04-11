@@ -10,6 +10,10 @@ import com.ear.di.enums.RespCode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Controller
 @CrossOrigin
 @RequestMapping("/merchant")
@@ -28,12 +32,12 @@ public class MerchantController {
     /**
      * 商户注册
      *
-     * @param merchantName      商户名称
-     * @param chnlAgentId       商户所属渠道商
-     * @param merchantPrivateId 商户证件号码
-     * @param merchantAddress   商户地址
-     * @param merchantPhone     商户手机号
-     * @param merchantEmail     商户邮箱
+     * @param merchantName     商户名称
+     * @param chnlAgentId      商户所属渠道商
+     * @param merchantPrivatId 商户证件号码
+     * @param merchantAdress   商户地址
+     * @param merchantPhone    商户手机号
+     * @param merchantEmail    商户邮箱
      * @return 交易结果
      */
     @ResponseBody
@@ -41,11 +45,14 @@ public class MerchantController {
     public Result register(@RequestParam(name = "merchantName") String merchantName,
                            @RequestParam(name = "chnlAgentId") String chnlAgentId,
                            @RequestParam(name = "userId") String userId,
-                           @RequestParam(name = "merchantPrivateId") String merchantPrivateId,
-                           @RequestParam(name = "merchantAddress") String merchantAddress,
+                           @RequestParam(name = "merchantPrivatId") String merchantPrivatId,
+                           @RequestParam(name = "merchantAdress") String merchantAdress,
                            @RequestParam(name = "merchantPhone") String merchantPhone,
                            @RequestParam(name = "merchantEmail") String merchantEmail) {
-        if (!this.query(chnlAgentId, merchantPrivateId, null, null).dataIsNummOrEmpty()) {
+        MerchantInfoExample example = new MerchantInfoExample();
+        MerchantInfoExample.Criteria criteria = example.createCriteria();
+        criteria.andMerchantPrivatIdEqualTo(merchantPrivatId).andChnlAgentIdEqualTo(chnlAgentId);
+        if (merchantInfoMapper.countByExample(example) > 0) {
             return Result.error(null, RespCode.MERCHANT_IS_ALREADY_EXIST);
         } else if (userController.getUser(null, userId).dataIsNummOrEmpty()) {
             return Result.error(null, RespCode.USER_IS_NOT_EXIST);
@@ -55,13 +62,13 @@ public class MerchantController {
             MerchantInfo merchantInfo = new MerchantInfo();
             merchantInfo.setUserId(userId);
             merchantInfo.setMerchantId(String.valueOf(System.currentTimeMillis()));
-            merchantInfo.setMerchantAdress(merchantAddress);
+            merchantInfo.setMerchantAdress(merchantAdress);
             merchantInfo.setMerchantEmail(merchantEmail);
             merchantInfo.setMerchantName(merchantName);
             merchantInfo.setMerchantPhone(merchantPhone);
             merchantInfo.setChnlAgentId(chnlAgentId);
             merchantInfo.setMerchantStatus(ACTIVE);
-            merchantInfo.setMerchantPrivatId(merchantPrivateId);
+            merchantInfo.setMerchantPrivatId(merchantPrivatId);
             return Result.judgeResult(merchantInfoMapper.insertSelective(merchantInfo) == 1, merchantInfo, RespCode.MERCHANT_REGISTER_ERROR);
         }
     }
@@ -110,7 +117,15 @@ public class MerchantController {
                         @RequestParam(name = "userId", required = false) String userId,
                         @RequestParam(name = "merchantPrivateId", required = false) String merchantPrivateId,
                         @RequestParam(name = "merchantId", required = false) String merchantId,
+                        @RequestParam(name = "pageSize", required = false) String pageSize,
+                        @RequestParam(name = "pageIndex", required = false) String pageIndex,
                         @RequestParam(name = "merchantStatus", required = false) String merchantStatus) {
+        if (StringUtils.isBlank(pageSize)) {
+            pageSize = "5";
+        }
+        if (StringUtils.isBlank(pageIndex)) {
+            pageIndex = "1";
+        }
         MerchantInfoExample example = new MerchantInfoExample();
         MerchantInfoExample.Criteria criteria = example.createCriteria();
         if (StringUtils.isNotBlank(userId)) {
@@ -128,7 +143,16 @@ public class MerchantController {
         if (StringUtils.isNotBlank(merchantStatus)) {
             criteria.andMerchantStatusEqualTo(merchantStatus);
         }
-        return Result.success(merchantInfoMapper.selectByExample(example));
+        List<MerchantInfo> merchantInfos = merchantInfoMapper.selectByExample(example);
+        Map<String, Object> dataMap = new HashMap<>();
+        int end = Integer.parseInt(pageIndex) * Integer.parseInt(pageSize);
+        int start = (Integer.parseInt(pageIndex) - 1) * Integer.parseInt(pageSize);
+        if (end > merchantInfos.size()) {
+            end = merchantInfos.size();
+        }
+        dataMap.put("merList", merchantInfos.subList(start, end));
+        dataMap.put("totalSize", merchantInfos.size());
+        return Result.success(dataMap);
     }
 
     /**
@@ -140,6 +164,19 @@ public class MerchantController {
      * @return 交易结果
      */
     public Result query(String chnlAgentId, String merchantPrivateId, String merchantId, String merchantStatus) {
-        return this.query(chnlAgentId, null, merchantPrivateId, merchantId, merchantStatus);
+        return this.query(chnlAgentId, null, merchantPrivateId, merchantId, null, null, merchantStatus);
     }
+
+    /**
+     * 商户信息删除
+     *
+     * @param id 商户ID
+     * @return 交易结果
+     */
+    @ResponseBody
+    @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
+    public Result delete(@RequestParam(name = "id") String id) {
+        return Result.judgeResult(merchantInfoMapper.deleteByPrimaryKey(Long.parseLong(id)) == 1, null, RespCode.MERCHANT_UPDATE_ERROR);
+    }
+
 }

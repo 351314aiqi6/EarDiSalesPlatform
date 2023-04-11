@@ -11,6 +11,14 @@ public class KOLInfo {
 
     private String kolName;
 
+    private String performPlatform;
+
+    private Long performNumber;
+
+    private Long prePerformNumber;
+
+    private Long performViewerNumber;
+
     private String kolAvatar;
 
     private Integer kolFollowers;
@@ -51,6 +59,38 @@ public class KOLInfo {
 
     public void setKolName(String kolName) {
         this.kolName = kolName == null ? null : kolName.trim();
+    }
+
+    public String getPerformPlatform() {
+        return performPlatform;
+    }
+
+    public void setPerformPlatform(String performPlatform) {
+        this.performPlatform = performPlatform == null ? null : performPlatform.trim();
+    }
+
+    public Long getPerformNumber() {
+        return performNumber;
+    }
+
+    public void setPerformNumber(Long performNumber) {
+        this.performNumber = performNumber;
+    }
+
+    public Long getPrePerformNumber() {
+        return prePerformNumber;
+    }
+
+    public void setPrePerformNumber(Long prePerformNumber) {
+        this.prePerformNumber = prePerformNumber;
+    }
+
+    public Long getPerformViewerNumber() {
+        return performViewerNumber;
+    }
+
+    public void setPerformViewerNumber(Long performViewerNumber) {
+        this.performViewerNumber = performViewerNumber;
     }
 
     public String getKolAvatar() {

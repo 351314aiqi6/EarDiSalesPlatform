@@ -16,15 +16,21 @@ public interface UserMessageMapper {
 
     int insertSelective(UserMessage record);
 
+    List<UserMessage> selectByExampleWithBLOBs(UserMessageExample example);
+
     List<UserMessage> selectByExample(UserMessageExample example);
 
     UserMessage selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") UserMessage record, @Param("example") UserMessageExample example);
 
+    int updateByExampleWithBLOBs(@Param("record") UserMessage record, @Param("example") UserMessageExample example);
+
     int updateByExample(@Param("record") UserMessage record, @Param("example") UserMessageExample example);
 
     int updateByPrimaryKeySelective(UserMessage record);
+
+    int updateByPrimaryKeyWithBLOBs(UserMessage record);
 
     int updateByPrimaryKey(UserMessage record);
 }

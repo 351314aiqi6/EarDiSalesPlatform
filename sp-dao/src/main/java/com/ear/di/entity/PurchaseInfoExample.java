@@ -306,6 +306,76 @@ public class PurchaseInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andPayeeUserIdIsNull() {
+            addCriterion("payee_user_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayeeUserIdIsNotNull() {
+            addCriterion("payee_user_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayeeUserIdEqualTo(String value) {
+            addCriterion("payee_user_id =", value, "payeeUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayeeUserIdNotEqualTo(String value) {
+            addCriterion("payee_user_id <>", value, "payeeUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayeeUserIdGreaterThan(String value) {
+            addCriterion("payee_user_id >", value, "payeeUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayeeUserIdGreaterThanOrEqualTo(String value) {
+            addCriterion("payee_user_id >=", value, "payeeUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayeeUserIdLessThan(String value) {
+            addCriterion("payee_user_id <", value, "payeeUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayeeUserIdLessThanOrEqualTo(String value) {
+            addCriterion("payee_user_id <=", value, "payeeUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayeeUserIdLike(String value) {
+            addCriterion("payee_user_id like", value, "payeeUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayeeUserIdNotLike(String value) {
+            addCriterion("payee_user_id not like", value, "payeeUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayeeUserIdIn(List<String> values) {
+            addCriterion("payee_user_id in", values, "payeeUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayeeUserIdNotIn(List<String> values) {
+            addCriterion("payee_user_id not in", values, "payeeUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayeeUserIdBetween(String value1, String value2) {
+            addCriterion("payee_user_id between", value1, value2, "payeeUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayeeUserIdNotBetween(String value1, String value2) {
+            addCriterion("payee_user_id not between", value1, value2, "payeeUserId");
+            return (Criteria) this;
+        }
+
         public Criteria andGoodsIdIsNull() {
             addCriterion("goods_id is null");
             return (Criteria) this;
@@ -436,6 +506,66 @@ public class PurchaseInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andTotalPriceIsNull() {
+            addCriterion("total_price is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalPriceIsNotNull() {
+            addCriterion("total_price is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalPriceEqualTo(BigDecimal value) {
+            addCriterion("total_price =", value, "totalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalPriceNotEqualTo(BigDecimal value) {
+            addCriterion("total_price <>", value, "totalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalPriceGreaterThan(BigDecimal value) {
+            addCriterion("total_price >", value, "totalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalPriceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("total_price >=", value, "totalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalPriceLessThan(BigDecimal value) {
+            addCriterion("total_price <", value, "totalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalPriceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("total_price <=", value, "totalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalPriceIn(List<BigDecimal> values) {
+            addCriterion("total_price in", values, "totalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalPriceNotIn(List<BigDecimal> values) {
+            addCriterion("total_price not in", values, "totalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalPriceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("total_price between", value1, value2, "totalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalPriceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("total_price not between", value1, value2, "totalPrice");
+            return (Criteria) this;
+        }
+
         public Criteria andReceiveAddressIsNull() {
             addCriterion("receive_address is null");
             return (Criteria) this;
@@ -506,63 +636,143 @@ public class PurchaseInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceIsNull() {
-            addCriterion("total_price is null");
+        public Criteria andReceiveNameIsNull() {
+            addCriterion("receive_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceIsNotNull() {
-            addCriterion("total_price is not null");
+        public Criteria andReceiveNameIsNotNull() {
+            addCriterion("receive_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceEqualTo(BigDecimal value) {
-            addCriterion("total_price =", value, "totalPrice");
+        public Criteria andReceiveNameEqualTo(String value) {
+            addCriterion("receive_name =", value, "receiveName");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceNotEqualTo(BigDecimal value) {
-            addCriterion("total_price <>", value, "totalPrice");
+        public Criteria andReceiveNameNotEqualTo(String value) {
+            addCriterion("receive_name <>", value, "receiveName");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceGreaterThan(BigDecimal value) {
-            addCriterion("total_price >", value, "totalPrice");
+        public Criteria andReceiveNameGreaterThan(String value) {
+            addCriterion("receive_name >", value, "receiveName");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceGreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("total_price >=", value, "totalPrice");
+        public Criteria andReceiveNameGreaterThanOrEqualTo(String value) {
+            addCriterion("receive_name >=", value, "receiveName");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceLessThan(BigDecimal value) {
-            addCriterion("total_price <", value, "totalPrice");
+        public Criteria andReceiveNameLessThan(String value) {
+            addCriterion("receive_name <", value, "receiveName");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceLessThanOrEqualTo(BigDecimal value) {
-            addCriterion("total_price <=", value, "totalPrice");
+        public Criteria andReceiveNameLessThanOrEqualTo(String value) {
+            addCriterion("receive_name <=", value, "receiveName");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceIn(List<BigDecimal> values) {
-            addCriterion("total_price in", values, "totalPrice");
+        public Criteria andReceiveNameLike(String value) {
+            addCriterion("receive_name like", value, "receiveName");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceNotIn(List<BigDecimal> values) {
-            addCriterion("total_price not in", values, "totalPrice");
+        public Criteria andReceiveNameNotLike(String value) {
+            addCriterion("receive_name not like", value, "receiveName");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("total_price between", value1, value2, "totalPrice");
+        public Criteria andReceiveNameIn(List<String> values) {
+            addCriterion("receive_name in", values, "receiveName");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPriceNotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("total_price not between", value1, value2, "totalPrice");
+        public Criteria andReceiveNameNotIn(List<String> values) {
+            addCriterion("receive_name not in", values, "receiveName");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveNameBetween(String value1, String value2) {
+            addCriterion("receive_name between", value1, value2, "receiveName");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveNameNotBetween(String value1, String value2) {
+            addCriterion("receive_name not between", value1, value2, "receiveName");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePhoneIsNull() {
+            addCriterion("receive_phone is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePhoneIsNotNull() {
+            addCriterion("receive_phone is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePhoneEqualTo(String value) {
+            addCriterion("receive_phone =", value, "receivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePhoneNotEqualTo(String value) {
+            addCriterion("receive_phone <>", value, "receivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePhoneGreaterThan(String value) {
+            addCriterion("receive_phone >", value, "receivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePhoneGreaterThanOrEqualTo(String value) {
+            addCriterion("receive_phone >=", value, "receivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePhoneLessThan(String value) {
+            addCriterion("receive_phone <", value, "receivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePhoneLessThanOrEqualTo(String value) {
+            addCriterion("receive_phone <=", value, "receivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePhoneLike(String value) {
+            addCriterion("receive_phone like", value, "receivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePhoneNotLike(String value) {
+            addCriterion("receive_phone not like", value, "receivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePhoneIn(List<String> values) {
+            addCriterion("receive_phone in", values, "receivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePhoneNotIn(List<String> values) {
+            addCriterion("receive_phone not in", values, "receivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePhoneBetween(String value1, String value2) {
+            addCriterion("receive_phone between", value1, value2, "receivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceivePhoneNotBetween(String value1, String value2) {
+            addCriterion("receive_phone not between", value1, value2, "receivePhone");
             return (Criteria) this;
         }
 

@@ -6,6 +6,10 @@
     <result column="kol_id" property="kolId" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="kol_name" property="kolName" jdbcType="VARCHAR" />
+    <result column="perform_platform" property="performPlatform" jdbcType="VARCHAR" />
+    <result column="perform_number" property="performNumber" jdbcType="BIGINT" />
+    <result column="pre_perform_number" property="prePerformNumber" jdbcType="BIGINT" />
+    <result column="perform_viewer_number" property="performViewerNumber" jdbcType="BIGINT" />
     <result column="kol_avatar" property="kolAvatar" jdbcType="VARCHAR" />
     <result column="kol_followers" property="kolFollowers" jdbcType="INTEGER" />
     <result column="kol_introduce" property="kolIntroduce" jdbcType="VARCHAR" />
@@ -71,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, kol_id, user_id, kol_name, kol_avatar, kol_followers, kol_introduce, create_time, 
-    update_time
+    id, kol_id, user_id, kol_name, perform_platform, perform_number, pre_perform_number, 
+    perform_viewer_number, kol_avatar, kol_followers, kol_introduce, create_time, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ear.di.entity.KOLInfoExample" >
     select
@@ -106,13 +110,15 @@
   </delete>
   <insert id="insert" parameterType="com.ear.di.entity.KOLInfo" >
     insert into kol_info (id, kol_id, user_id, 
-      kol_name, kol_avatar, kol_followers, 
-      kol_introduce, create_time, update_time
-      )
+      kol_name, perform_platform, perform_number, 
+      pre_perform_number, perform_viewer_number, kol_avatar, 
+      kol_followers, kol_introduce, create_time, 
+      update_time)
     values (#{id,jdbcType=BIGINT}, #{kolId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
-      #{kolName,jdbcType=VARCHAR}, #{kolAvatar,jdbcType=VARCHAR}, #{kolFollowers,jdbcType=INTEGER}, 
-      #{kolIntroduce,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{kolName,jdbcType=VARCHAR}, #{performPlatform,jdbcType=VARCHAR}, #{performNumber,jdbcType=BIGINT}, 
+      #{prePerformNumber,jdbcType=BIGINT}, #{performViewerNumber,jdbcType=BIGINT}, #{kolAvatar,jdbcType=VARCHAR}, 
+      #{kolFollowers,jdbcType=INTEGER}, #{kolIntroduce,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ear.di.entity.KOLInfo" >
     insert into kol_info
@@ -128,6 +134,18 @@
       </if>
       <if test="kolName != null" >
         kol_name,
+      </if>
+      <if test="performPlatform != null" >
+        perform_platform,
+      </if>
+      <if test="performNumber != null" >
+        perform_number,
+      </if>
+      <if test="prePerformNumber != null" >
+        pre_perform_number,
+      </if>
+      <if test="performViewerNumber != null" >
+        perform_viewer_number,
       </if>
       <if test="kolAvatar != null" >
         kol_avatar,
@@ -157,6 +175,18 @@
       </if>
       <if test="kolName != null" >
         #{kolName,jdbcType=VARCHAR},
+      </if>
+      <if test="performPlatform != null" >
+        #{performPlatform,jdbcType=VARCHAR},
+      </if>
+      <if test="performNumber != null" >
+        #{performNumber,jdbcType=BIGINT},
+      </if>
+      <if test="prePerformNumber != null" >
+        #{prePerformNumber,jdbcType=BIGINT},
+      </if>
+      <if test="performViewerNumber != null" >
+        #{performViewerNumber,jdbcType=BIGINT},
       </if>
       <if test="kolAvatar != null" >
         #{kolAvatar,jdbcType=VARCHAR},
@@ -196,6 +226,18 @@
       <if test="record.kolName != null" >
         kol_name = #{record.kolName,jdbcType=VARCHAR},
       </if>
+      <if test="record.performPlatform != null" >
+        perform_platform = #{record.performPlatform,jdbcType=VARCHAR},
+      </if>
+      <if test="record.performNumber != null" >
+        perform_number = #{record.performNumber,jdbcType=BIGINT},
+      </if>
+      <if test="record.prePerformNumber != null" >
+        pre_perform_number = #{record.prePerformNumber,jdbcType=BIGINT},
+      </if>
+      <if test="record.performViewerNumber != null" >
+        perform_viewer_number = #{record.performViewerNumber,jdbcType=BIGINT},
+      </if>
       <if test="record.kolAvatar != null" >
         kol_avatar = #{record.kolAvatar,jdbcType=VARCHAR},
       </if>
@@ -222,6 +264,10 @@
       kol_id = #{record.kolId,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=VARCHAR},
       kol_name = #{record.kolName,jdbcType=VARCHAR},
+      perform_platform = #{record.performPlatform,jdbcType=VARCHAR},
+      perform_number = #{record.performNumber,jdbcType=BIGINT},
+      pre_perform_number = #{record.prePerformNumber,jdbcType=BIGINT},
+      perform_viewer_number = #{record.performViewerNumber,jdbcType=BIGINT},
       kol_avatar = #{record.kolAvatar,jdbcType=VARCHAR},
       kol_followers = #{record.kolFollowers,jdbcType=INTEGER},
       kol_introduce = #{record.kolIntroduce,jdbcType=VARCHAR},
@@ -242,6 +288,18 @@
       </if>
       <if test="kolName != null" >
         kol_name = #{kolName,jdbcType=VARCHAR},
+      </if>
+      <if test="performPlatform != null" >
+        perform_platform = #{performPlatform,jdbcType=VARCHAR},
+      </if>
+      <if test="performNumber != null" >
+        perform_number = #{performNumber,jdbcType=BIGINT},
+      </if>
+      <if test="prePerformNumber != null" >
+        pre_perform_number = #{prePerformNumber,jdbcType=BIGINT},
+      </if>
+      <if test="performViewerNumber != null" >
+        perform_viewer_number = #{performViewerNumber,jdbcType=BIGINT},
       </if>
       <if test="kolAvatar != null" >
         kol_avatar = #{kolAvatar,jdbcType=VARCHAR},
@@ -266,6 +324,10 @@
     set kol_id = #{kolId,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=VARCHAR},
       kol_name = #{kolName,jdbcType=VARCHAR},
+      perform_platform = #{performPlatform,jdbcType=VARCHAR},
+      perform_number = #{performNumber,jdbcType=BIGINT},
+      pre_perform_number = #{prePerformNumber,jdbcType=BIGINT},
+      perform_viewer_number = #{performViewerNumber,jdbcType=BIGINT},
       kol_avatar = #{kolAvatar,jdbcType=VARCHAR},
       kol_followers = #{kolFollowers,jdbcType=INTEGER},
       kol_introduce = #{kolIntroduce,jdbcType=VARCHAR},

@@ -10,6 +10,10 @@ public class GoodsInfo {
 
     private String merchantId;
 
+    private String chnlAgentId;
+
+    private String chnlUserId;
+
     private String goodsName;
 
     private String goodsType;
@@ -50,6 +54,22 @@ public class GoodsInfo {
 
     public void setMerchantId(String merchantId) {
         this.merchantId = merchantId == null ? null : merchantId.trim();
+    }
+
+    public String getChnlAgentId() {
+        return chnlAgentId;
+    }
+
+    public void setChnlAgentId(String chnlAgentId) {
+        this.chnlAgentId = chnlAgentId == null ? null : chnlAgentId.trim();
+    }
+
+    public String getChnlUserId() {
+        return chnlUserId;
+    }
+
+    public void setChnlUserId(String chnlUserId) {
+        this.chnlUserId = chnlUserId == null ? null : chnlUserId.trim();
     }
 
     public String getGoodsName() {

@@ -7,9 +7,13 @@ public class KOLPerformInfo {
 
     private String perforId;
 
+    private String performTitle;
+
     private String kolId;
 
     private String merchantId;
+
+    private String performPlatform;
 
     private String performGoodsIntroduce;
 
@@ -17,9 +21,11 @@ public class KOLPerformInfo {
 
     private Integer applyNumber;
 
-    private Date performStartDttm;
+    private Long performStartDttm;
 
-    private Date performEndDttm;
+    private Long performEndDttm;
+
+    private String performStatus;
 
     private Date createTime;
 
@@ -41,6 +47,14 @@ public class KOLPerformInfo {
         this.perforId = perforId == null ? null : perforId.trim();
     }
 
+    public String getPerformTitle() {
+        return performTitle;
+    }
+
+    public void setPerformTitle(String performTitle) {
+        this.performTitle = performTitle == null ? null : performTitle.trim();
+    }
+
     public String getKolId() {
         return kolId;
     }
@@ -55,6 +69,14 @@ public class KOLPerformInfo {
 
     public void setMerchantId(String merchantId) {
         this.merchantId = merchantId == null ? null : merchantId.trim();
+    }
+
+    public String getPerformPlatform() {
+        return performPlatform;
+    }
+
+    public void setPerformPlatform(String performPlatform) {
+        this.performPlatform = performPlatform == null ? null : performPlatform.trim();
     }
 
     public String getPerformGoodsIntroduce() {
@@ -81,20 +103,28 @@ public class KOLPerformInfo {
         this.applyNumber = applyNumber;
     }
 
-    public Date getPerformStartDttm() {
+    public Long getPerformStartDttm() {
         return performStartDttm;
     }
 
-    public void setPerformStartDttm(Date performStartDttm) {
+    public void setPerformStartDttm(Long performStartDttm) {
         this.performStartDttm = performStartDttm;
     }
 
-    public Date getPerformEndDttm() {
+    public Long getPerformEndDttm() {
         return performEndDttm;
     }
 
-    public void setPerformEndDttm(Date performEndDttm) {
+    public void setPerformEndDttm(Long performEndDttm) {
         this.performEndDttm = performEndDttm;
+    }
+
+    public String getPerformStatus() {
+        return performStatus;
+    }
+
+    public void setPerformStatus(String performStatus) {
+        this.performStatus = performStatus == null ? null : performStatus.trim();
     }
 
     public Date getCreateTime() {

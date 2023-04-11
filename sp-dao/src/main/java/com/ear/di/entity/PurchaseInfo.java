@@ -10,13 +10,19 @@ public class PurchaseInfo {
 
     private String purchaseUserId;
 
+    private String payeeUserId;
+
     private String goodsId;
 
     private Integer purchaseNumber;
 
+    private BigDecimal totalPrice;
+
     private String receiveAddress;
 
-    private BigDecimal totalPrice;
+    private String receiveName;
+
+    private String receivePhone;
 
     private String purchaseAdditional;
 
@@ -50,6 +56,14 @@ public class PurchaseInfo {
         this.purchaseUserId = purchaseUserId == null ? null : purchaseUserId.trim();
     }
 
+    public String getPayeeUserId() {
+        return payeeUserId;
+    }
+
+    public void setPayeeUserId(String payeeUserId) {
+        this.payeeUserId = payeeUserId == null ? null : payeeUserId.trim();
+    }
+
     public String getGoodsId() {
         return goodsId;
     }
@@ -66,6 +80,14 @@ public class PurchaseInfo {
         this.purchaseNumber = purchaseNumber;
     }
 
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     public String getReceiveAddress() {
         return receiveAddress;
     }
@@ -74,12 +96,20 @@ public class PurchaseInfo {
         this.receiveAddress = receiveAddress == null ? null : receiveAddress.trim();
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
+    public String getReceiveName() {
+        return receiveName;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setReceiveName(String receiveName) {
+        this.receiveName = receiveName == null ? null : receiveName.trim();
+    }
+
+    public String getReceivePhone() {
+        return receivePhone;
+    }
+
+    public void setReceivePhone(String receivePhone) {
+        this.receivePhone = receivePhone == null ? null : receivePhone.trim();
     }
 
     public String getPurchaseAdditional() {

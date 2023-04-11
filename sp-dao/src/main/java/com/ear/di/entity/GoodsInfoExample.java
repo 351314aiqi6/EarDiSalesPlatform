@@ -306,6 +306,146 @@ public class GoodsInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andChnlAgentIdIsNull() {
+            addCriterion("chnl_agent_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlAgentIdIsNotNull() {
+            addCriterion("chnl_agent_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlAgentIdEqualTo(String value) {
+            addCriterion("chnl_agent_id =", value, "chnlAgentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlAgentIdNotEqualTo(String value) {
+            addCriterion("chnl_agent_id <>", value, "chnlAgentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlAgentIdGreaterThan(String value) {
+            addCriterion("chnl_agent_id >", value, "chnlAgentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlAgentIdGreaterThanOrEqualTo(String value) {
+            addCriterion("chnl_agent_id >=", value, "chnlAgentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlAgentIdLessThan(String value) {
+            addCriterion("chnl_agent_id <", value, "chnlAgentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlAgentIdLessThanOrEqualTo(String value) {
+            addCriterion("chnl_agent_id <=", value, "chnlAgentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlAgentIdLike(String value) {
+            addCriterion("chnl_agent_id like", value, "chnlAgentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlAgentIdNotLike(String value) {
+            addCriterion("chnl_agent_id not like", value, "chnlAgentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlAgentIdIn(List<String> values) {
+            addCriterion("chnl_agent_id in", values, "chnlAgentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlAgentIdNotIn(List<String> values) {
+            addCriterion("chnl_agent_id not in", values, "chnlAgentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlAgentIdBetween(String value1, String value2) {
+            addCriterion("chnl_agent_id between", value1, value2, "chnlAgentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlAgentIdNotBetween(String value1, String value2) {
+            addCriterion("chnl_agent_id not between", value1, value2, "chnlAgentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlUserIdIsNull() {
+            addCriterion("chnl_user_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlUserIdIsNotNull() {
+            addCriterion("chnl_user_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlUserIdEqualTo(String value) {
+            addCriterion("chnl_user_id =", value, "chnlUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlUserIdNotEqualTo(String value) {
+            addCriterion("chnl_user_id <>", value, "chnlUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlUserIdGreaterThan(String value) {
+            addCriterion("chnl_user_id >", value, "chnlUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlUserIdGreaterThanOrEqualTo(String value) {
+            addCriterion("chnl_user_id >=", value, "chnlUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlUserIdLessThan(String value) {
+            addCriterion("chnl_user_id <", value, "chnlUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlUserIdLessThanOrEqualTo(String value) {
+            addCriterion("chnl_user_id <=", value, "chnlUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlUserIdLike(String value) {
+            addCriterion("chnl_user_id like", value, "chnlUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlUserIdNotLike(String value) {
+            addCriterion("chnl_user_id not like", value, "chnlUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlUserIdIn(List<String> values) {
+            addCriterion("chnl_user_id in", values, "chnlUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlUserIdNotIn(List<String> values) {
+            addCriterion("chnl_user_id not in", values, "chnlUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlUserIdBetween(String value1, String value2) {
+            addCriterion("chnl_user_id between", value1, value2, "chnlUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChnlUserIdNotBetween(String value1, String value2) {
+            addCriterion("chnl_user_id not between", value1, value2, "chnlUserId");
+            return (Criteria) this;
+        }
+
         public Criteria andGoodsNameIsNull() {
             addCriterion("goods_name is null");
             return (Criteria) this;

@@ -54,17 +54,16 @@ public class UserController {
             List<MerchantInfo> merchantInfos = merchantInfoMapper.selectByExample(merchantInfoExample);
             dataMap.put("merchantNum", merchantInfos.size());
             // 查询商品数
-            for (MerchantInfo merchantInfo : merchantInfos) {
-                GoodsInfoExample goodsInfoExample = new GoodsInfoExample();
-                goodsInfoExample.createCriteria().andMerchantIdEqualTo(merchantInfo.getMerchantId());
-                dataMap.put("goodsNum", goodsInfoMapper.countByExample(goodsInfoExample));
-            }
+            GoodsInfoExample goodsInfoExample = new GoodsInfoExample();
+            goodsInfoExample.createCriteria().andChnlUserIdEqualTo(String.valueOf(userId));
+            dataMap.put("goodsNum", goodsInfoMapper.countByExample(goodsInfoExample));
+
             // 统计渠道商的数
             ChnlAgentInfoExample chnlAgentInfoExample = new ChnlAgentInfoExample();
             chnlAgentInfoExample.createCriteria().andUserIdEqualTo(String.valueOf(userId));
             dataMap.put("chnlNum", chnlAgentInfoMapper.countByExample(chnlAgentInfoExample));
             Result result = SpringUtil.getBean(MessageController.class).queryReceive(String.valueOf(userId));
-            List<UserMessage> messageInfos = (List<UserMessage>) result.getResult();
+            List<UserMessage> messageInfos = (List<UserMessage>) ((HashMap<String, Object>) result.getResult()).get("noReadList");
             List<Map<String, Object>> messageMapList = new ArrayList<>(messageInfos.size());
             messageInfos.forEach(messageInfo -> {
                 Map<String, Object> stringObjectMap = BeanUtil.beanToMap(messageInfo);
@@ -87,9 +86,9 @@ public class UserController {
             userLoginInfo.setLoginIpAddress("");
             userLoginInfo.setLoginIpAddress("");
             Random random = new Random();
-            String[] ipArray = new String[]{"10.33.43.133","32.44.56.77","43.44.43.127","53.44.43.127"};
+            String[] ipArray = new String[]{"10.33.43.133", "32.44.56.77", "43.44.43.127", "53.44.43.127"};
             userLoginInfo.setLoginIpAddress(ipArray[random.nextInt(3)]);
-            String[] addressArray = new String[]{"广东省深圳市","湖南省长沙市","陕西省西安市","北京市朝阳区"};
+            String[] addressArray = new String[]{"广东省深圳市", "湖南省长沙市", "陕西省西安市", "北京市朝阳区"};
             userLoginInfo.setLoginAddressDesc(addressArray[random.nextInt(3)]);
             userLoginInfoMapper.insertSelective(userLoginInfo);
             userInfo.setUserLastLoginId(userLoginInfo.getId());
@@ -208,5 +207,43 @@ public class UserController {
         }
         List<UserInfo> userInfos = userInfoMapper.selectByExample(example);
         return Result.success(userInfos);
+    }
+
+    /**
+     * 获取全量用户信息
+     *
+     * @return 交易结果
+     */
+    @ResponseBody
+    @RequestMapping(value = "/query", method = {RequestMethod.GET, RequestMethod.POST})
+    public Result query() {
+        List<Map<String, Object>> userList = new ArrayList<>();
+        List<UserInfo> userInfos = userInfoMapper.selectByExample(new UserInfoExample());
+        for (UserInfo userInfo : userInfos) {
+            Map<String, Object> userMap = new HashMap<>();
+            userMap.put("id", userInfo.getId());
+            userMap.put("userRealName", userInfo.getUserRealName());
+            userMap.put("userEmail", userInfo.getUserEmail());
+        }
+        return Result.success(userInfoMapper.selectByExample(new UserInfoExample()));
+    }
+
+    /**
+     * 获取全量用户信息
+     *
+     * @return 交易结果
+     */
+    @ResponseBody
+    @RequestMapping(value = "/queryOne", method = {RequestMethod.GET, RequestMethod.POST})
+    public Result queryOne(@RequestParam(name = "recvUserId") String recvUserId) {
+        UserInfo userInfo = userInfoMapper.selectByPrimaryKey(Long.parseLong(recvUserId));
+        Map<String, Object> userMap = new HashMap<>();
+        if (userInfo == null) {
+            return Result.error(null, RespCode.USER_IS_NOT_EXIST);
+        }
+        userMap.put("id", userInfo.getId());
+        userMap.put("userRealName", userInfo.getUserRealName());
+        userMap.put("userEmail", userInfo.getUserEmail());
+        return Result.success(userMap);
     }
 }

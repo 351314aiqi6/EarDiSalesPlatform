@@ -235,6 +235,76 @@ public class KOLPerformInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andPerformTitleIsNull() {
+            addCriterion("perform_title is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformTitleIsNotNull() {
+            addCriterion("perform_title is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformTitleEqualTo(String value) {
+            addCriterion("perform_title =", value, "performTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformTitleNotEqualTo(String value) {
+            addCriterion("perform_title <>", value, "performTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformTitleGreaterThan(String value) {
+            addCriterion("perform_title >", value, "performTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformTitleGreaterThanOrEqualTo(String value) {
+            addCriterion("perform_title >=", value, "performTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformTitleLessThan(String value) {
+            addCriterion("perform_title <", value, "performTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformTitleLessThanOrEqualTo(String value) {
+            addCriterion("perform_title <=", value, "performTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformTitleLike(String value) {
+            addCriterion("perform_title like", value, "performTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformTitleNotLike(String value) {
+            addCriterion("perform_title not like", value, "performTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformTitleIn(List<String> values) {
+            addCriterion("perform_title in", values, "performTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformTitleNotIn(List<String> values) {
+            addCriterion("perform_title not in", values, "performTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformTitleBetween(String value1, String value2) {
+            addCriterion("perform_title between", value1, value2, "performTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformTitleNotBetween(String value1, String value2) {
+            addCriterion("perform_title not between", value1, value2, "performTitle");
+            return (Criteria) this;
+        }
+
         public Criteria andKolIdIsNull() {
             addCriterion("kol_id is null");
             return (Criteria) this;
@@ -372,6 +442,76 @@ public class KOLPerformInfoExample {
 
         public Criteria andMerchantIdNotBetween(String value1, String value2) {
             addCriterion("merchant_id not between", value1, value2, "merchantId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformIsNull() {
+            addCriterion("perform_platform is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformIsNotNull() {
+            addCriterion("perform_platform is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformEqualTo(String value) {
+            addCriterion("perform_platform =", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformNotEqualTo(String value) {
+            addCriterion("perform_platform <>", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformGreaterThan(String value) {
+            addCriterion("perform_platform >", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformGreaterThanOrEqualTo(String value) {
+            addCriterion("perform_platform >=", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformLessThan(String value) {
+            addCriterion("perform_platform <", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformLessThanOrEqualTo(String value) {
+            addCriterion("perform_platform <=", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformLike(String value) {
+            addCriterion("perform_platform like", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformNotLike(String value) {
+            addCriterion("perform_platform not like", value, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformIn(List<String> values) {
+            addCriterion("perform_platform in", values, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformNotIn(List<String> values) {
+            addCriterion("perform_platform not in", values, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformBetween(String value1, String value2) {
+            addCriterion("perform_platform between", value1, value2, "performPlatform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformPlatformNotBetween(String value1, String value2) {
+            addCriterion("perform_platform not between", value1, value2, "performPlatform");
             return (Criteria) this;
         }
 
@@ -585,52 +725,52 @@ public class KOLPerformInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andPerformStartDttmEqualTo(Date value) {
+        public Criteria andPerformStartDttmEqualTo(Long value) {
             addCriterion("perform_start_dttm =", value, "performStartDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformStartDttmNotEqualTo(Date value) {
+        public Criteria andPerformStartDttmNotEqualTo(Long value) {
             addCriterion("perform_start_dttm <>", value, "performStartDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformStartDttmGreaterThan(Date value) {
+        public Criteria andPerformStartDttmGreaterThan(Long value) {
             addCriterion("perform_start_dttm >", value, "performStartDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformStartDttmGreaterThanOrEqualTo(Date value) {
+        public Criteria andPerformStartDttmGreaterThanOrEqualTo(Long value) {
             addCriterion("perform_start_dttm >=", value, "performStartDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformStartDttmLessThan(Date value) {
+        public Criteria andPerformStartDttmLessThan(Long value) {
             addCriterion("perform_start_dttm <", value, "performStartDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformStartDttmLessThanOrEqualTo(Date value) {
+        public Criteria andPerformStartDttmLessThanOrEqualTo(Long value) {
             addCriterion("perform_start_dttm <=", value, "performStartDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformStartDttmIn(List<Date> values) {
+        public Criteria andPerformStartDttmIn(List<Long> values) {
             addCriterion("perform_start_dttm in", values, "performStartDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformStartDttmNotIn(List<Date> values) {
+        public Criteria andPerformStartDttmNotIn(List<Long> values) {
             addCriterion("perform_start_dttm not in", values, "performStartDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformStartDttmBetween(Date value1, Date value2) {
+        public Criteria andPerformStartDttmBetween(Long value1, Long value2) {
             addCriterion("perform_start_dttm between", value1, value2, "performStartDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformStartDttmNotBetween(Date value1, Date value2) {
+        public Criteria andPerformStartDttmNotBetween(Long value1, Long value2) {
             addCriterion("perform_start_dttm not between", value1, value2, "performStartDttm");
             return (Criteria) this;
         }
@@ -645,53 +785,123 @@ public class KOLPerformInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andPerformEndDttmEqualTo(Date value) {
+        public Criteria andPerformEndDttmEqualTo(Long value) {
             addCriterion("perform_end_dttm =", value, "performEndDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformEndDttmNotEqualTo(Date value) {
+        public Criteria andPerformEndDttmNotEqualTo(Long value) {
             addCriterion("perform_end_dttm <>", value, "performEndDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformEndDttmGreaterThan(Date value) {
+        public Criteria andPerformEndDttmGreaterThan(Long value) {
             addCriterion("perform_end_dttm >", value, "performEndDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformEndDttmGreaterThanOrEqualTo(Date value) {
+        public Criteria andPerformEndDttmGreaterThanOrEqualTo(Long value) {
             addCriterion("perform_end_dttm >=", value, "performEndDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformEndDttmLessThan(Date value) {
+        public Criteria andPerformEndDttmLessThan(Long value) {
             addCriterion("perform_end_dttm <", value, "performEndDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformEndDttmLessThanOrEqualTo(Date value) {
+        public Criteria andPerformEndDttmLessThanOrEqualTo(Long value) {
             addCriterion("perform_end_dttm <=", value, "performEndDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformEndDttmIn(List<Date> values) {
+        public Criteria andPerformEndDttmIn(List<Long> values) {
             addCriterion("perform_end_dttm in", values, "performEndDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformEndDttmNotIn(List<Date> values) {
+        public Criteria andPerformEndDttmNotIn(List<Long> values) {
             addCriterion("perform_end_dttm not in", values, "performEndDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformEndDttmBetween(Date value1, Date value2) {
+        public Criteria andPerformEndDttmBetween(Long value1, Long value2) {
             addCriterion("perform_end_dttm between", value1, value2, "performEndDttm");
             return (Criteria) this;
         }
 
-        public Criteria andPerformEndDttmNotBetween(Date value1, Date value2) {
+        public Criteria andPerformEndDttmNotBetween(Long value1, Long value2) {
             addCriterion("perform_end_dttm not between", value1, value2, "performEndDttm");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformStatusIsNull() {
+            addCriterion("perform_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformStatusIsNotNull() {
+            addCriterion("perform_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformStatusEqualTo(String value) {
+            addCriterion("perform_status =", value, "performStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformStatusNotEqualTo(String value) {
+            addCriterion("perform_status <>", value, "performStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformStatusGreaterThan(String value) {
+            addCriterion("perform_status >", value, "performStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("perform_status >=", value, "performStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformStatusLessThan(String value) {
+            addCriterion("perform_status <", value, "performStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformStatusLessThanOrEqualTo(String value) {
+            addCriterion("perform_status <=", value, "performStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformStatusLike(String value) {
+            addCriterion("perform_status like", value, "performStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformStatusNotLike(String value) {
+            addCriterion("perform_status not like", value, "performStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformStatusIn(List<String> values) {
+            addCriterion("perform_status in", values, "performStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformStatusNotIn(List<String> values) {
+            addCriterion("perform_status not in", values, "performStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformStatusBetween(String value1, String value2) {
+            addCriterion("perform_status between", value1, value2, "performStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerformStatusNotBetween(String value1, String value2) {
+            addCriterion("perform_status not between", value1, value2, "performStatus");
             return (Criteria) this;
         }
 

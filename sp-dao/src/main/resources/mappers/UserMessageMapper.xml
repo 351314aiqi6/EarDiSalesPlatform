@@ -4,12 +4,15 @@
   <resultMap id="BaseResultMap" type="com.ear.di.entity.UserMessage" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="message_id" property="messageId" jdbcType="VARCHAR" />
+    <result column="message_title" property="messageTitle" jdbcType="VARCHAR" />
     <result column="send_user_Id" property="sendUserId" jdbcType="VARCHAR" />
     <result column="recv_user_id" property="recvUserId" jdbcType="VARCHAR" />
-    <result column="message_content" property="messageContent" jdbcType="VARCHAR" />
     <result column="message_status" property="messageStatus" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ear.di.entity.UserMessage" extends="BaseResultMap" >
+    <result column="message_content" property="messageContent" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,9 +73,28 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, message_id, send_user_Id, recv_user_id, message_content, message_status, create_time, 
+    id, message_id, message_title, send_user_Id, recv_user_id, message_status, create_time, 
     update_time
   </sql>
+  <sql id="Blob_Column_List" >
+    message_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ear.di.entity.UserMessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ear.di.entity.UserMessageExample" >
     select
     <if test="distinct" >
@@ -87,9 +109,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from user_message
     where id = #{id,jdbcType=BIGINT}
   </select>
@@ -104,12 +128,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ear.di.entity.UserMessage" >
-    insert into user_message (id, message_id, send_user_Id, 
-      recv_user_id, message_content, message_status, 
-      create_time, update_time)
-    values (#{id,jdbcType=BIGINT}, #{messageId,jdbcType=VARCHAR}, #{sendUserId,jdbcType=VARCHAR}, 
-      #{recvUserId,jdbcType=VARCHAR}, #{messageContent,jdbcType=VARCHAR}, #{messageStatus,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    insert into user_message (id, message_id, message_title, 
+      send_user_Id, recv_user_id, message_status, 
+      create_time, update_time, message_content
+      )
+    values (#{id,jdbcType=BIGINT}, #{messageId,jdbcType=VARCHAR}, #{messageTitle,jdbcType=VARCHAR}, 
+      #{sendUserId,jdbcType=VARCHAR}, #{recvUserId,jdbcType=VARCHAR}, #{messageStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{messageContent,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ear.di.entity.UserMessage" >
     insert into user_message
@@ -120,14 +146,14 @@
       <if test="messageId != null" >
         message_id,
       </if>
+      <if test="messageTitle != null" >
+        message_title,
+      </if>
       <if test="sendUserId != null" >
         send_user_Id,
       </if>
       <if test="recvUserId != null" >
         recv_user_id,
-      </if>
-      <if test="messageContent != null" >
-        message_content,
       </if>
       <if test="messageStatus != null" >
         message_status,
@@ -138,6 +164,9 @@
       <if test="updateTime != null" >
         update_time,
       </if>
+      <if test="messageContent != null" >
+        message_content,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -146,14 +175,14 @@
       <if test="messageId != null" >
         #{messageId,jdbcType=VARCHAR},
       </if>
+      <if test="messageTitle != null" >
+        #{messageTitle,jdbcType=VARCHAR},
+      </if>
       <if test="sendUserId != null" >
         #{sendUserId,jdbcType=VARCHAR},
       </if>
       <if test="recvUserId != null" >
         #{recvUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="messageContent != null" >
-        #{messageContent,jdbcType=VARCHAR},
       </if>
       <if test="messageStatus != null" >
         #{messageStatus,jdbcType=VARCHAR},
@@ -163,6 +192,9 @@
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageContent != null" >
+        #{messageContent,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -181,14 +213,14 @@
       <if test="record.messageId != null" >
         message_id = #{record.messageId,jdbcType=VARCHAR},
       </if>
+      <if test="record.messageTitle != null" >
+        message_title = #{record.messageTitle,jdbcType=VARCHAR},
+      </if>
       <if test="record.sendUserId != null" >
         send_user_Id = #{record.sendUserId,jdbcType=VARCHAR},
       </if>
       <if test="record.recvUserId != null" >
         recv_user_id = #{record.recvUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.messageContent != null" >
-        message_content = #{record.messageContent,jdbcType=VARCHAR},
       </if>
       <if test="record.messageStatus != null" >
         message_status = #{record.messageStatus,jdbcType=VARCHAR},
@@ -199,7 +231,25 @@
       <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.messageContent != null" >
+        message_content = #{record.messageContent,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update user_message
+    set id = #{record.id,jdbcType=BIGINT},
+      message_id = #{record.messageId,jdbcType=VARCHAR},
+      message_title = #{record.messageTitle,jdbcType=VARCHAR},
+      send_user_Id = #{record.sendUserId,jdbcType=VARCHAR},
+      recv_user_id = #{record.recvUserId,jdbcType=VARCHAR},
+      message_status = #{record.messageStatus,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      message_content = #{record.messageContent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -208,9 +258,9 @@
     update user_message
     set id = #{record.id,jdbcType=BIGINT},
       message_id = #{record.messageId,jdbcType=VARCHAR},
+      message_title = #{record.messageTitle,jdbcType=VARCHAR},
       send_user_Id = #{record.sendUserId,jdbcType=VARCHAR},
       recv_user_id = #{record.recvUserId,jdbcType=VARCHAR},
-      message_content = #{record.messageContent,jdbcType=VARCHAR},
       message_status = #{record.messageStatus,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
@@ -224,14 +274,14 @@
       <if test="messageId != null" >
         message_id = #{messageId,jdbcType=VARCHAR},
       </if>
+      <if test="messageTitle != null" >
+        message_title = #{messageTitle,jdbcType=VARCHAR},
+      </if>
       <if test="sendUserId != null" >
         send_user_Id = #{sendUserId,jdbcType=VARCHAR},
       </if>
       <if test="recvUserId != null" >
         recv_user_id = #{recvUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="messageContent != null" >
-        message_content = #{messageContent,jdbcType=VARCHAR},
       </if>
       <if test="messageStatus != null" >
         message_status = #{messageStatus,jdbcType=VARCHAR},
@@ -242,15 +292,30 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="messageContent != null" >
+        message_content = #{messageContent,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ear.di.entity.UserMessage" >
+    update user_message
+    set message_id = #{messageId,jdbcType=VARCHAR},
+      message_title = #{messageTitle,jdbcType=VARCHAR},
+      send_user_Id = #{sendUserId,jdbcType=VARCHAR},
+      recv_user_id = #{recvUserId,jdbcType=VARCHAR},
+      message_status = #{messageStatus,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      message_content = #{messageContent,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ear.di.entity.UserMessage" >
     update user_message
     set message_id = #{messageId,jdbcType=VARCHAR},
+      message_title = #{messageTitle,jdbcType=VARCHAR},
       send_user_Id = #{sendUserId,jdbcType=VARCHAR},
       recv_user_id = #{recvUserId,jdbcType=VARCHAR},
-      message_content = #{messageContent,jdbcType=VARCHAR},
       message_status = #{messageStatus,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}

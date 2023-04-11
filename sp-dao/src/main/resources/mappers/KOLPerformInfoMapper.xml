@@ -4,13 +4,16 @@
   <resultMap id="BaseResultMap" type="com.ear.di.entity.KOLPerformInfo" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="perfor_id" property="perforId" jdbcType="VARCHAR" />
+    <result column="perform_title" property="performTitle" jdbcType="VARCHAR" />
     <result column="kol_id" property="kolId" jdbcType="VARCHAR" />
     <result column="merchant_id" property="merchantId" jdbcType="VARCHAR" />
+    <result column="perform_platform" property="performPlatform" jdbcType="VARCHAR" />
     <result column="perform_goods_introduce" property="performGoodsIntroduce" jdbcType="VARCHAR" />
     <result column="perform_url" property="performUrl" jdbcType="VARCHAR" />
     <result column="apply_number" property="applyNumber" jdbcType="INTEGER" />
-    <result column="perform_start_dttm" property="performStartDttm" jdbcType="TIMESTAMP" />
-    <result column="perform_end_dttm" property="performEndDttm" jdbcType="TIMESTAMP" />
+    <result column="perform_start_dttm" property="performStartDttm" jdbcType="BIGINT" />
+    <result column="perform_end_dttm" property="performEndDttm" jdbcType="BIGINT" />
+    <result column="perform_status" property="performStatus" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -73,8 +76,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, perfor_id, kol_id, merchant_id, perform_goods_introduce, perform_url, apply_number, 
-    perform_start_dttm, perform_end_dttm, create_time, update_time
+    id, perfor_id, perform_title, kol_id, merchant_id, perform_platform, perform_goods_introduce, 
+    perform_url, apply_number, perform_start_dttm, perform_end_dttm, perform_status, 
+    create_time, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ear.di.entity.KOLPerformInfoExample" >
     select
@@ -107,13 +111,15 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ear.di.entity.KOLPerformInfo" >
-    insert into kol_perform_info (id, perfor_id, kol_id, 
-      merchant_id, perform_goods_introduce, perform_url, 
-      apply_number, perform_start_dttm, perform_end_dttm, 
+    insert into kol_perform_info (id, perfor_id, perform_title, 
+      kol_id, merchant_id, perform_platform, 
+      perform_goods_introduce, perform_url, apply_number, 
+      perform_start_dttm, perform_end_dttm, perform_status, 
       create_time, update_time)
-    values (#{id,jdbcType=BIGINT}, #{perforId,jdbcType=VARCHAR}, #{kolId,jdbcType=VARCHAR}, 
-      #{merchantId,jdbcType=VARCHAR}, #{performGoodsIntroduce,jdbcType=VARCHAR}, #{performUrl,jdbcType=VARCHAR}, 
-      #{applyNumber,jdbcType=INTEGER}, #{performStartDttm,jdbcType=TIMESTAMP}, #{performEndDttm,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=BIGINT}, #{perforId,jdbcType=VARCHAR}, #{performTitle,jdbcType=VARCHAR}, 
+      #{kolId,jdbcType=VARCHAR}, #{merchantId,jdbcType=VARCHAR}, #{performPlatform,jdbcType=VARCHAR}, 
+      #{performGoodsIntroduce,jdbcType=VARCHAR}, #{performUrl,jdbcType=VARCHAR}, #{applyNumber,jdbcType=INTEGER}, 
+      #{performStartDttm,jdbcType=BIGINT}, #{performEndDttm,jdbcType=BIGINT}, #{performStatus,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ear.di.entity.KOLPerformInfo" >
@@ -125,11 +131,17 @@
       <if test="perforId != null" >
         perfor_id,
       </if>
+      <if test="performTitle != null" >
+        perform_title,
+      </if>
       <if test="kolId != null" >
         kol_id,
       </if>
       <if test="merchantId != null" >
         merchant_id,
+      </if>
+      <if test="performPlatform != null" >
+        perform_platform,
       </if>
       <if test="performGoodsIntroduce != null" >
         perform_goods_introduce,
@@ -146,6 +158,9 @@
       <if test="performEndDttm != null" >
         perform_end_dttm,
       </if>
+      <if test="performStatus != null" >
+        perform_status,
+      </if>
       <if test="createTime != null" >
         create_time,
       </if>
@@ -160,11 +175,17 @@
       <if test="perforId != null" >
         #{perforId,jdbcType=VARCHAR},
       </if>
+      <if test="performTitle != null" >
+        #{performTitle,jdbcType=VARCHAR},
+      </if>
       <if test="kolId != null" >
         #{kolId,jdbcType=VARCHAR},
       </if>
       <if test="merchantId != null" >
         #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="performPlatform != null" >
+        #{performPlatform,jdbcType=VARCHAR},
       </if>
       <if test="performGoodsIntroduce != null" >
         #{performGoodsIntroduce,jdbcType=VARCHAR},
@@ -176,10 +197,13 @@
         #{applyNumber,jdbcType=INTEGER},
       </if>
       <if test="performStartDttm != null" >
-        #{performStartDttm,jdbcType=TIMESTAMP},
+        #{performStartDttm,jdbcType=BIGINT},
       </if>
       <if test="performEndDttm != null" >
-        #{performEndDttm,jdbcType=TIMESTAMP},
+        #{performEndDttm,jdbcType=BIGINT},
+      </if>
+      <if test="performStatus != null" >
+        #{performStatus,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -204,11 +228,17 @@
       <if test="record.perforId != null" >
         perfor_id = #{record.perforId,jdbcType=VARCHAR},
       </if>
+      <if test="record.performTitle != null" >
+        perform_title = #{record.performTitle,jdbcType=VARCHAR},
+      </if>
       <if test="record.kolId != null" >
         kol_id = #{record.kolId,jdbcType=VARCHAR},
       </if>
       <if test="record.merchantId != null" >
         merchant_id = #{record.merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.performPlatform != null" >
+        perform_platform = #{record.performPlatform,jdbcType=VARCHAR},
       </if>
       <if test="record.performGoodsIntroduce != null" >
         perform_goods_introduce = #{record.performGoodsIntroduce,jdbcType=VARCHAR},
@@ -220,10 +250,13 @@
         apply_number = #{record.applyNumber,jdbcType=INTEGER},
       </if>
       <if test="record.performStartDttm != null" >
-        perform_start_dttm = #{record.performStartDttm,jdbcType=TIMESTAMP},
+        perform_start_dttm = #{record.performStartDttm,jdbcType=BIGINT},
       </if>
       <if test="record.performEndDttm != null" >
-        perform_end_dttm = #{record.performEndDttm,jdbcType=TIMESTAMP},
+        perform_end_dttm = #{record.performEndDttm,jdbcType=BIGINT},
+      </if>
+      <if test="record.performStatus != null" >
+        perform_status = #{record.performStatus,jdbcType=VARCHAR},
       </if>
       <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -240,13 +273,16 @@
     update kol_perform_info
     set id = #{record.id,jdbcType=BIGINT},
       perfor_id = #{record.perforId,jdbcType=VARCHAR},
+      perform_title = #{record.performTitle,jdbcType=VARCHAR},
       kol_id = #{record.kolId,jdbcType=VARCHAR},
       merchant_id = #{record.merchantId,jdbcType=VARCHAR},
+      perform_platform = #{record.performPlatform,jdbcType=VARCHAR},
       perform_goods_introduce = #{record.performGoodsIntroduce,jdbcType=VARCHAR},
       perform_url = #{record.performUrl,jdbcType=VARCHAR},
       apply_number = #{record.applyNumber,jdbcType=INTEGER},
-      perform_start_dttm = #{record.performStartDttm,jdbcType=TIMESTAMP},
-      perform_end_dttm = #{record.performEndDttm,jdbcType=TIMESTAMP},
+      perform_start_dttm = #{record.performStartDttm,jdbcType=BIGINT},
+      perform_end_dttm = #{record.performEndDttm,jdbcType=BIGINT},
+      perform_status = #{record.performStatus,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -259,11 +295,17 @@
       <if test="perforId != null" >
         perfor_id = #{perforId,jdbcType=VARCHAR},
       </if>
+      <if test="performTitle != null" >
+        perform_title = #{performTitle,jdbcType=VARCHAR},
+      </if>
       <if test="kolId != null" >
         kol_id = #{kolId,jdbcType=VARCHAR},
       </if>
       <if test="merchantId != null" >
         merchant_id = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="performPlatform != null" >
+        perform_platform = #{performPlatform,jdbcType=VARCHAR},
       </if>
       <if test="performGoodsIntroduce != null" >
         perform_goods_introduce = #{performGoodsIntroduce,jdbcType=VARCHAR},
@@ -275,10 +317,13 @@
         apply_number = #{applyNumber,jdbcType=INTEGER},
       </if>
       <if test="performStartDttm != null" >
-        perform_start_dttm = #{performStartDttm,jdbcType=TIMESTAMP},
+        perform_start_dttm = #{performStartDttm,jdbcType=BIGINT},
       </if>
       <if test="performEndDttm != null" >
-        perform_end_dttm = #{performEndDttm,jdbcType=TIMESTAMP},
+        perform_end_dttm = #{performEndDttm,jdbcType=BIGINT},
+      </if>
+      <if test="performStatus != null" >
+        perform_status = #{performStatus,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -292,13 +337,16 @@
   <update id="updateByPrimaryKey" parameterType="com.ear.di.entity.KOLPerformInfo" >
     update kol_perform_info
     set perfor_id = #{perforId,jdbcType=VARCHAR},
+      perform_title = #{performTitle,jdbcType=VARCHAR},
       kol_id = #{kolId,jdbcType=VARCHAR},
       merchant_id = #{merchantId,jdbcType=VARCHAR},
+      perform_platform = #{performPlatform,jdbcType=VARCHAR},
       perform_goods_introduce = #{performGoodsIntroduce,jdbcType=VARCHAR},
       perform_url = #{performUrl,jdbcType=VARCHAR},
       apply_number = #{applyNumber,jdbcType=INTEGER},
-      perform_start_dttm = #{performStartDttm,jdbcType=TIMESTAMP},
-      perform_end_dttm = #{performEndDttm,jdbcType=TIMESTAMP},
+      perform_start_dttm = #{performStartDttm,jdbcType=BIGINT},
+      perform_end_dttm = #{performEndDttm,jdbcType=BIGINT},
+      perform_status = #{performStatus,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
