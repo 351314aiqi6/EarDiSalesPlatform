@@ -715,6 +715,66 @@ public class KOLPerformInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andApplyMaxNumberIsNull() {
+            addCriterion("apply_max_number is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyMaxNumberIsNotNull() {
+            addCriterion("apply_max_number is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyMaxNumberEqualTo(Integer value) {
+            addCriterion("apply_max_number =", value, "applyMaxNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyMaxNumberNotEqualTo(Integer value) {
+            addCriterion("apply_max_number <>", value, "applyMaxNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyMaxNumberGreaterThan(Integer value) {
+            addCriterion("apply_max_number >", value, "applyMaxNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyMaxNumberGreaterThanOrEqualTo(Integer value) {
+            addCriterion("apply_max_number >=", value, "applyMaxNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyMaxNumberLessThan(Integer value) {
+            addCriterion("apply_max_number <", value, "applyMaxNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyMaxNumberLessThanOrEqualTo(Integer value) {
+            addCriterion("apply_max_number <=", value, "applyMaxNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyMaxNumberIn(List<Integer> values) {
+            addCriterion("apply_max_number in", values, "applyMaxNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyMaxNumberNotIn(List<Integer> values) {
+            addCriterion("apply_max_number not in", values, "applyMaxNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyMaxNumberBetween(Integer value1, Integer value2) {
+            addCriterion("apply_max_number between", value1, value2, "applyMaxNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyMaxNumberNotBetween(Integer value1, Integer value2) {
+            addCriterion("apply_max_number not between", value1, value2, "applyMaxNumber");
+            return (Criteria) this;
+        }
+
         public Criteria andPerformStartDttmIsNull() {
             addCriterion("perform_start_dttm is null");
             return (Criteria) this;

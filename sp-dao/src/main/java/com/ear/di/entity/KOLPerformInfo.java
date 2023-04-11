@@ -21,6 +21,8 @@ public class KOLPerformInfo {
 
     private Integer applyNumber;
 
+    private Integer applyMaxNumber;
+
     private Long performStartDttm;
 
     private Long performEndDttm;
@@ -101,6 +103,14 @@ public class KOLPerformInfo {
 
     public void setApplyNumber(Integer applyNumber) {
         this.applyNumber = applyNumber;
+    }
+
+    public Integer getApplyMaxNumber() {
+        return applyMaxNumber;
+    }
+
+    public void setApplyMaxNumber(Integer applyMaxNumber) {
+        this.applyMaxNumber = applyMaxNumber;
     }
 
     public Long getPerformStartDttm() {

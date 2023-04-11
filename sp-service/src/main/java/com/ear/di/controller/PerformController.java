@@ -65,7 +65,8 @@ public class PerformController {
                         @RequestParam(name = "performGoodsIntroduce") String performGoodsIntroduce,
                         @RequestParam(name = "performUrl") String performUrl,
                         @RequestParam(name = "performEndDttm") String performEndDttm,
-                        @RequestParam(name = "performStartDttm") String performStartDttm) {
+                        @RequestParam(name = "performStartDttm") String performStartDttm,
+                        @RequestParam(name = "applyMaxNumber", required = false) String applyMaxNumber) {
         KOLInfo kolInfo = kolInfoMapper.selectByPrimaryKey(Long.parseLong(kolKey));
         if (kolInfo == null) {
             return Result.error(null, RespCode.KOL_NOT_EXIST);
@@ -85,6 +86,11 @@ public class PerformController {
             performInfo.setPerformEndDttm(Long.parseLong(performEndDttm));
             performInfo.setPerformGoodsIntroduce(performGoodsIntroduce);
             performInfo.setPerformStatus(INIT);
+            if(StringUtils.isNotBlank(applyMaxNumber)){
+                performInfo.setApplyMaxNumber(Integer.parseInt(applyMaxNumber));
+            }else{
+                performInfo.setApplyMaxNumber(100);
+            }
             // 预直播+1
             kolInfo.setPrePerformNumber(kolInfo.getPrePerformNumber() + 1);
             kolInfoMapper.updateByPrimaryKeySelective(kolInfo);
@@ -307,6 +313,9 @@ public class PerformController {
         // 观众人数+1
         kolInfo.setPerformViewerNumber(kolInfo.getPerformViewerNumber() + 1);
         performInfo.setApplyNumber(performInfo.getApplyNumber() + 1);
+        if(performInfo.getApplyNumber() > performInfo.getApplyMaxNumber()){
+            return Result.error(null, RespCode.BOOK_OVER);
+        }
         kolInfoMapper.updateByPrimaryKeySelective(kolInfo);
         kolPerformInfoMapper.updateByPrimaryKeySelective(performInfo);
         return Result.judgeResult(userApplyPerformMapper.insertSelective(userApplyPerform) == 1, userApplyPerform, RespCode.PERFORM_APPLY_ERROR);

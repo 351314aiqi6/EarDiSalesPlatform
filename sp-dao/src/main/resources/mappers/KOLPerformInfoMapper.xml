@@ -11,6 +11,7 @@
     <result column="perform_goods_introduce" property="performGoodsIntroduce" jdbcType="VARCHAR" />
     <result column="perform_url" property="performUrl" jdbcType="VARCHAR" />
     <result column="apply_number" property="applyNumber" jdbcType="INTEGER" />
+    <result column="apply_max_number" property="applyMaxNumber" jdbcType="INTEGER" />
     <result column="perform_start_dttm" property="performStartDttm" jdbcType="BIGINT" />
     <result column="perform_end_dttm" property="performEndDttm" jdbcType="BIGINT" />
     <result column="perform_status" property="performStatus" jdbcType="VARCHAR" />
@@ -77,8 +78,8 @@
   </sql>
   <sql id="Base_Column_List" >
     id, perfor_id, perform_title, kol_id, merchant_id, perform_platform, perform_goods_introduce, 
-    perform_url, apply_number, perform_start_dttm, perform_end_dttm, perform_status, 
-    create_time, update_time
+    perform_url, apply_number, apply_max_number, perform_start_dttm, perform_end_dttm, 
+    perform_status, create_time, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ear.di.entity.KOLPerformInfoExample" >
     select
@@ -114,13 +115,15 @@
     insert into kol_perform_info (id, perfor_id, perform_title, 
       kol_id, merchant_id, perform_platform, 
       perform_goods_introduce, perform_url, apply_number, 
-      perform_start_dttm, perform_end_dttm, perform_status, 
-      create_time, update_time)
+      apply_max_number, perform_start_dttm, perform_end_dttm, 
+      perform_status, create_time, update_time
+      )
     values (#{id,jdbcType=BIGINT}, #{perforId,jdbcType=VARCHAR}, #{performTitle,jdbcType=VARCHAR}, 
       #{kolId,jdbcType=VARCHAR}, #{merchantId,jdbcType=VARCHAR}, #{performPlatform,jdbcType=VARCHAR}, 
       #{performGoodsIntroduce,jdbcType=VARCHAR}, #{performUrl,jdbcType=VARCHAR}, #{applyNumber,jdbcType=INTEGER}, 
-      #{performStartDttm,jdbcType=BIGINT}, #{performEndDttm,jdbcType=BIGINT}, #{performStatus,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{applyMaxNumber,jdbcType=INTEGER}, #{performStartDttm,jdbcType=BIGINT}, #{performEndDttm,jdbcType=BIGINT}, 
+      #{performStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ear.di.entity.KOLPerformInfo" >
     insert into kol_perform_info
@@ -151,6 +154,9 @@
       </if>
       <if test="applyNumber != null" >
         apply_number,
+      </if>
+      <if test="applyMaxNumber != null" >
+        apply_max_number,
       </if>
       <if test="performStartDttm != null" >
         perform_start_dttm,
@@ -195,6 +201,9 @@
       </if>
       <if test="applyNumber != null" >
         #{applyNumber,jdbcType=INTEGER},
+      </if>
+      <if test="applyMaxNumber != null" >
+        #{applyMaxNumber,jdbcType=INTEGER},
       </if>
       <if test="performStartDttm != null" >
         #{performStartDttm,jdbcType=BIGINT},
@@ -249,6 +258,9 @@
       <if test="record.applyNumber != null" >
         apply_number = #{record.applyNumber,jdbcType=INTEGER},
       </if>
+      <if test="record.applyMaxNumber != null" >
+        apply_max_number = #{record.applyMaxNumber,jdbcType=INTEGER},
+      </if>
       <if test="record.performStartDttm != null" >
         perform_start_dttm = #{record.performStartDttm,jdbcType=BIGINT},
       </if>
@@ -280,6 +292,7 @@
       perform_goods_introduce = #{record.performGoodsIntroduce,jdbcType=VARCHAR},
       perform_url = #{record.performUrl,jdbcType=VARCHAR},
       apply_number = #{record.applyNumber,jdbcType=INTEGER},
+      apply_max_number = #{record.applyMaxNumber,jdbcType=INTEGER},
       perform_start_dttm = #{record.performStartDttm,jdbcType=BIGINT},
       perform_end_dttm = #{record.performEndDttm,jdbcType=BIGINT},
       perform_status = #{record.performStatus,jdbcType=VARCHAR},
@@ -316,6 +329,9 @@
       <if test="applyNumber != null" >
         apply_number = #{applyNumber,jdbcType=INTEGER},
       </if>
+      <if test="applyMaxNumber != null" >
+        apply_max_number = #{applyMaxNumber,jdbcType=INTEGER},
+      </if>
       <if test="performStartDttm != null" >
         perform_start_dttm = #{performStartDttm,jdbcType=BIGINT},
       </if>
@@ -344,6 +360,7 @@
       perform_goods_introduce = #{performGoodsIntroduce,jdbcType=VARCHAR},
       perform_url = #{performUrl,jdbcType=VARCHAR},
       apply_number = #{applyNumber,jdbcType=INTEGER},
+      apply_max_number = #{applyMaxNumber,jdbcType=INTEGER},
       perform_start_dttm = #{performStartDttm,jdbcType=BIGINT},
       perform_end_dttm = #{performEndDttm,jdbcType=BIGINT},
       perform_status = #{performStatus,jdbcType=VARCHAR},
