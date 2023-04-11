@@ -53,6 +53,9 @@ public class GoodsTypeController {
         GoodsTypeExample example = new GoodsTypeExample();
         example.createCriteria().andGoodsTypeIdEqualTo(goodsTypeId);
         GoodsType goodsType = goodsTypeMapper.selectByExample(example).get(0);
+        if(goodsType.getGoddsTypeNumber() == null){
+            goodsType.setGoddsTypeNumber(0L);
+        }
         goodsType.setGoddsTypeNumber(goodsType.getGoddsTypeNumber() + goodsNumber);
         return Result.success(goodsTypeMapper.updateByPrimaryKeySelective(goodsType));
     }
