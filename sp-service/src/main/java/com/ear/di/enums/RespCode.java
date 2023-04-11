@@ -11,6 +11,8 @@ public enum RespCode {
 
     USER_IS_NOT_EXIST("000004", "用户不存在"),
 
+    GET_USER_AVATAR_ERROR("000081", "读取用户头像失败"),
+
     UPDATE_USER_ERROR("000005", "修改用户信息失败"),
 
     ADD_CHNL_INFO_ERROR("000006", "添加渠道商异常"),

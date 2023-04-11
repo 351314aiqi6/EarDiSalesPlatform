@@ -7,15 +7,21 @@ import com.ear.di.comm.Result;
 import com.ear.di.dao.*;
 import com.ear.di.entity.*;
 import com.ear.di.enums.RespCode;
+import com.ear.di.util.FileUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.*;
 import java.util.*;
 
 @Controller
 @CrossOrigin
 @RequestMapping("/user")
 public class UserController {
+    /**
+     * 文件根路径
+     */
+    public static String USER_FILE_PATH = FileUtil.FILE_ROOT_PATH + "userAvatar/";
 
     private final UserInfoMapper userInfoMapper = SpringUtil.getBean(UserInfoMapper.class);
 
@@ -93,6 +99,8 @@ public class UserController {
             userLoginInfoMapper.insertSelective(userLoginInfo);
             userInfo.setUserLastLoginId(userLoginInfo.getId());
             userInfoMapper.updateByPrimaryKeySelective(userInfo);
+            // 设置头像信息
+            userInfo.setUserAvatar(this.getUserAvatar(String.valueOf(userInfo.getId())).getResult().toString());
             return Result.success(dataMap);
         }
     }
@@ -122,6 +130,7 @@ public class UserController {
                            @RequestParam(name = "userEmail") String userEmail,
                            @RequestParam(name = "userMobilePhone") String userMobilePhone,
                            @RequestParam(name = "userAddress") String userAddress,
+                           @RequestParam(name = "userAvatar", required = false) String userAvatar,
                            @RequestParam(name = "userAdditional", required = false) String userAdditional) {
         if (!this.getUser(userLoginName, null).dataIsNummOrEmpty()) {
             return Result.error(null, RespCode.LOGIN_USER_NAME_IS_EXIST);
@@ -139,6 +148,16 @@ public class UserController {
             userInfo.setUserAdditional(userAdditional);
             userInfo.setCreateTime(new Date());
             userInfo.setUpdateTime(new Date());
+            if (StringUtils.isNotBlank(userAvatar)) {
+                String userAvatarFilePah = USER_FILE_PATH + userInfo.getUserLoginName() + ".text";
+                try {
+                    FileUtil.write(userAvatarFilePah, userAvatar);
+                    userInfo.setUserAvatar(userAvatarFilePah);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return Result.error(null, RespCode.USER_REGISTER_ERROR);
+                }
+            }
             return Result.judgeResult(userInfoMapper.insertSelective(userInfo) == 1,
                     userInfo, RespCode.USER_REGISTER_ERROR);
         }
@@ -245,5 +264,58 @@ public class UserController {
         userMap.put("userRealName", userInfo.getUserRealName());
         userMap.put("userEmail", userInfo.getUserEmail());
         return Result.success(userMap);
+    }
+
+
+    /**
+     * 获取全量用户信息
+     *
+     * @return 交易结果
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getUserAvatar", method = {RequestMethod.GET, RequestMethod.POST})
+    public Result getUserAvatar(@RequestParam(name = "id") String id) {
+        UserInfo userInfo = userInfoMapper.selectByPrimaryKey(Long.parseLong(id));
+        try {
+            return Result.success(FileUtil.read(userInfo.getUserAvatar()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Result.error(null, RespCode.USER_IS_NOT_EXIST);
+        }
+    }
+
+    /**
+     * 获取全量用户信息
+     *
+     * @return 交易结果
+     */
+    @ResponseBody
+    @RequestMapping(value = "/replaceUserAvatar", method = {RequestMethod.GET, RequestMethod.POST})
+    public Result replaceUserAvatar(@RequestParam(name = "id",required = false) String id,
+                                    @RequestParam(name = "userAvatar",required = false) String userAvatar) {
+        if(StringUtils.isBlank(id)){return Result.success(null);};
+        UserInfo userInfo = userInfoMapper.selectByPrimaryKey(Long.parseLong(id));
+        try {
+            FileUtil.write(userInfo.getUserAvatar(), userAvatar);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Result.error(null, RespCode.USER_IS_NOT_EXIST);
+        }
+        return Result.success(null);
+    }
+
+
+    public static void main(String[] args) throws IOException {
+        String filePath = "/Users/zengbo/EarDi/img/userAvatar/sss.text";
+        System.out.println(filePath.substring(0, filePath.lastIndexOf("/") + 1));
+//        String fileName = "sss.text";
+//        File file = new File(filePath);
+//        if (!file.exists()) {
+//            file.mkdirs();
+//        }
+//        FileWriter fileWriter = new FileWriter(new File(filePath + fileName));
+//        fileWriter.write("sssssss");
+//        fileWriter.flush();
+//        fileWriter.close();
     }
 }

@@ -31,6 +31,8 @@ public class UserInfo {
 
     private Long userLastLoginId;
 
+    private String userAvatar;
+
     public Long getId() {
         return id;
     }
@@ -141,5 +143,13 @@ public class UserInfo {
 
     public void setUserLastLoginId(Long userLastLoginId) {
         this.userLastLoginId = userLastLoginId;
+    }
+
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar == null ? null : userAvatar.trim();
     }
 }
