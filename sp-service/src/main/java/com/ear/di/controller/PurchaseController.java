@@ -46,6 +46,11 @@ public class PurchaseController {
     public final static String RECEIVE = "04";
 
     /**
+     * 已取消
+     */
+    public final static String CANCEL = "99";
+
+    /**
      * 申诉中
      */
     public final static String APPEAL = "05";
@@ -127,6 +132,7 @@ public class PurchaseController {
             List<String> illegalStatus = new ArrayList<>();
             illegalStatus.add(RECEIVE);
             illegalStatus.add(APPEAL);
+            illegalStatus.add(CANCEL);
             Map<String, Object> dataMap = new HashMap<>();
             PurchaseInfoExample example = new PurchaseInfoExample();
             example.createCriteria().andPurchaseUserIdEqualTo(userId).andPurchaseStatusNotIn(illegalStatus);
@@ -135,13 +141,18 @@ public class PurchaseController {
             example.createCriteria().andPayeeUserIdEqualTo(userId).andPurchaseStatusNotIn(illegalStatus);
             dataMap.put("payeePurchaseList", purchaseInfoMapper.selectByExample(example));
             example.clear();
-            example.createCriteria().andPurchaseUserIdEqualTo(userId).andPurchaseStatusEqualTo(RECEIVE);
+
+            List<String> statusList = new ArrayList<>();
+            statusList.add(RECEIVE);
+            statusList.add(CANCEL);
+            example.createCriteria().andPurchaseUserIdEqualTo(userId).andPurchaseStatusIn(statusList);
             List<PurchaseInfo> purchaseInfos1 = purchaseInfoMapper.selectByExample(example);
             example.clear();
-            example.createCriteria().andPayeeUserIdEqualTo(userId).andPurchaseStatusEqualTo(RECEIVE);
+            example.createCriteria().andPayeeUserIdEqualTo(userId).andPurchaseStatusIn(statusList);
             List<PurchaseInfo> purchaseInfos2 = purchaseInfoMapper.selectByExample(example);
             purchaseInfos1.addAll(purchaseInfos2);
             dataMap.put("closePurchaseList", purchaseInfos1);
+
             example.clear();
             example.createCriteria().andPurchaseUserIdEqualTo(userId).andPurchaseStatusEqualTo(APPEAL);
             List<PurchaseInfo> appealPurchaseList = purchaseInfoMapper.selectByExample(example);

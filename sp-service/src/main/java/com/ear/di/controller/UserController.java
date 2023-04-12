@@ -100,7 +100,7 @@ public class UserController {
             userInfo.setUserLastLoginId(userLoginInfo.getId());
             userInfoMapper.updateByPrimaryKeySelective(userInfo);
             // 设置头像信息
-            userInfo.setUserAvatar(this.getUserAvatar(String.valueOf(userInfo.getId())).getResult().toString());
+            userInfo.setUserAvatar((String) this.getUserAvatar(String.valueOf(userInfo.getId())).getResult());
             return Result.success(dataMap);
         }
     }
@@ -277,6 +277,9 @@ public class UserController {
     public Result getUserAvatar(@RequestParam(name = "id") String id) {
         UserInfo userInfo = userInfoMapper.selectByPrimaryKey(Long.parseLong(id));
         try {
+            if (StringUtils.isBlank(userInfo.getUserAvatar())) {
+                return Result.success(null);
+            }
             return Result.success(FileUtil.read(userInfo.getUserAvatar()));
         } catch (IOException e) {
             e.printStackTrace();
@@ -291,9 +294,12 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/replaceUserAvatar", method = {RequestMethod.GET, RequestMethod.POST})
-    public Result replaceUserAvatar(@RequestParam(name = "id",required = false) String id,
-                                    @RequestParam(name = "userAvatar",required = false) String userAvatar) {
-        if(StringUtils.isBlank(id)){return Result.success(null);};
+    public Result replaceUserAvatar(@RequestParam(name = "id", required = false) String id,
+                                    @RequestParam(name = "userAvatar", required = false) String userAvatar) {
+        if (StringUtils.isBlank(id)) {
+            return Result.success(null);
+        }
+        ;
         UserInfo userInfo = userInfoMapper.selectByPrimaryKey(Long.parseLong(id));
         try {
             FileUtil.write(userInfo.getUserAvatar(), userAvatar);
