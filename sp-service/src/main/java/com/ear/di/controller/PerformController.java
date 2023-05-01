@@ -340,7 +340,10 @@ public class PerformController {
             statusList.add(PROCESSING);
             KOLPerformInfoExample kolPerformInfoExample = new KOLPerformInfoExample();
             kolPerformInfoExample.createCriteria().andKolIdEqualTo(String.valueOf(kolInfo.getId())).andPerformStatusIn(statusList);
-            return Result.success(kolPerformInfoMapper.selectByExample(kolPerformInfoExample));
+            Map<String,Object> dataMap = new HashMap<>();
+            dataMap.put("kolInfo",kolInfo);
+            dataMap.put("performList",kolPerformInfoMapper.selectByExample(kolPerformInfoExample));
+            return Result.success(dataMap);
         }
     }
 

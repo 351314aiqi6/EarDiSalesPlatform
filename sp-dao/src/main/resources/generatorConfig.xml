@@ -5,7 +5,7 @@
 
 <generatorConfiguration>
     <!-- 驱动地址-->
-    <classPathEntry location="/Users/zengbo/Repository/aku/mysql/mysql-connector-java/8.0.15/mysql-connector-java-8.0.15.jar"/>
+    <classPathEntry location="D:\code\apache-maven-3.3.3-bin\maven-repository\mysql\mysql-connector-java\8.0.15\mysql-connector-java-8.0.15.jar"/>
     <context id="Tables" targetRuntime="MyBatis3">
 
         <!-- 注释 -->
@@ -21,7 +21,7 @@
                 driverClass="com.mysql.cj.jdbc.Driver"
                 connectionURL="jdbc:mysql://localhost:3306/salesdb?allowPublicKeyRetrieval=true"
                 userId="root"
-                password="35131426">
+                password="123456">
         </jdbcConnection>
 
         <!-- 非必需，类型处理器，在数据库类型和java类型之间的转换控制-->
@@ -55,8 +55,8 @@
         <!-- 配置表信息 -->
         <!-- schema即为数据库名 tableName为对应的数据库表 domainObjectName是要生成的实体类 enable*ByExample
             是否生成 example类 -->
-        <table schema="paymentdb" tableName="kol_perform_info"
-               domainObjectName="KOLPerformInfo" enableCountByExample="true"
+        <table schema="paymentdb" tableName="permission_info"
+               domainObjectName="PermissionInfo" enableCountByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                enableUpdateByExample="true">
         </table>
