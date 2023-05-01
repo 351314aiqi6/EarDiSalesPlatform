@@ -21,7 +21,7 @@ public class UserController {
     /**
      * 文件根路径
      */
-    public static String USER_FILE_PATH = FileUtil.FILE_ROOT_PATH + "userAvatar/";
+    public static String USER_FILE_PATH = FileUtil.FILE_ROOT_PATH + "/Users/zengbo/EarDi/img/";
 
     private final UserInfoMapper userInfoMapper = SpringUtil.getBean(UserInfoMapper.class);
 
@@ -164,7 +164,7 @@ public class UserController {
     }
 
     /**
-     * 注册接口
+     * 修改接口
      *
      * @param userId          用户名
      * @param userPassword    用户密码
@@ -268,7 +268,7 @@ public class UserController {
 
 
     /**
-     * 获取全量用户信息
+     * 获取图片
      *
      * @return 交易结果
      */
@@ -288,7 +288,7 @@ public class UserController {
     }
 
     /**
-     * 获取全量用户信息
+     * 更换图片
      *
      * @return 交易结果
      */
@@ -299,7 +299,7 @@ public class UserController {
         if (StringUtils.isBlank(id)) {
             return Result.success(null);
         }
-        ;
+
         UserInfo userInfo = userInfoMapper.selectByPrimaryKey(Long.parseLong(id));
         try {
             FileUtil.write(userInfo.getUserAvatar(), userAvatar);

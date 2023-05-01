@@ -9,7 +9,7 @@ public class FileUtil {
     /**
      * 文件根路径
      */
-    public static String FILE_ROOT_PATH = "/Users/zengbo/EarDi/img/";
+    public static String FILE_ROOT_PATH = "D:\\img";
 
     /**
      * 写文件

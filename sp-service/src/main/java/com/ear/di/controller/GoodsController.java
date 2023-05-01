@@ -9,9 +9,11 @@ import com.ear.di.dao.GoodsTypeMapper;
 import com.ear.di.dao.MerchantInfoMapper;
 import com.ear.di.entity.*;
 import com.ear.di.enums.RespCode;
+import com.ear.di.util.FileUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +28,8 @@ public class GoodsController {
      * 激活状态
      */
     public final static String ACTIVE = "00";
+
+    public static String USER_FILE_PATH = FileUtil.FILE_ROOT_PATH + "/Users/zengbo/EarDi/img/";
 
     private final GoodsInfoMapper goodsInfoMapper = SpringUtil.getBean(GoodsInfoMapper.class);
 
@@ -53,7 +57,13 @@ public class GoodsController {
      */
     @ResponseBody
     @RequestMapping(value = "/add", method = {RequestMethod.GET, RequestMethod.POST})
-    public Result add(@RequestParam(name = "merchantId") String merchantId, @RequestParam(name = "goodsDesc") String goodsDesc, @RequestParam(name = "goodsImage", required = false) String goodsImage, @RequestParam(name = "goodsName") String goodsName, @RequestParam(name = "goodsPrice") String goodsPrice, @RequestParam(name = "goodsStock") String goodsStock, @RequestParam(name = "goodsTypeId") String goodsTypeId) {
+    public Result add(@RequestParam(name = "merchantId") String merchantId,
+                      @RequestParam(name = "goodsDesc") String goodsDesc,
+                      @RequestParam(name = "goodsImage", required = false) String goodsImage,
+                      @RequestParam(name = "goodsName") String goodsName,
+                      @RequestParam(name = "goodsPrice") String goodsPrice,
+                      @RequestParam(name = "goodsStock") String goodsStock,
+                      @RequestParam(name = "goodsTypeId") String goodsTypeId) {
         MerchantInfoExample example = new MerchantInfoExample();
         example.createCriteria().andMerchantIdEqualTo(merchantId);
         List<MerchantInfo> merchantInfos = merchantInfoMapper.selectByExample(example);
@@ -63,7 +73,6 @@ public class GoodsController {
             MerchantInfo merchantInfo = merchantInfos.get(0);
             GoodsInfo goodsInfo = new GoodsInfo();
             goodsInfo.setGoodsDesc(goodsDesc);
-            goodsInfo.setGoodsImage(goodsImage);
             goodsInfo.setGoodsName(goodsName);
             goodsInfo.setGoodsStatus(ACTIVE);
             goodsInfo.setChnlAgentId(merchantInfo.getChnlAgentId());
@@ -73,6 +82,15 @@ public class GoodsController {
             goodsInfo.setGoodsPrice(new BigDecimal(goodsPrice));
             goodsInfo.setGoodsStock(Integer.parseInt(goodsStock));
             goodsInfo.setGoodsId(String.valueOf(System.currentTimeMillis()));
+            if (StringUtils.isNotBlank(goodsImage)) {
+                goodsInfo.setGoodsImage(USER_FILE_PATH + goodsInfo.getGoodsId() + ".text");
+                try {
+                    FileUtil.write(goodsInfo.getGoodsImage(), goodsImage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return Result.error(null, RespCode.ADD_GOODS_ERROR);
+                }
+            }
             return Result.judgeResult(goodsInfoMapper.insertSelective(goodsInfo) == 1 && goodsTypeController.addGoods(goodsTypeId, 1L).isSuccess(), goodsInfo, RespCode.ADD_GOODS_ERROR);
         }
     }
@@ -91,11 +109,17 @@ public class GoodsController {
      */
     @ResponseBody
     @RequestMapping(value = "/update", method = {RequestMethod.GET, RequestMethod.POST})
-    public Result update(@RequestParam(name = "id") String id, @RequestParam(name = "goodsDesc", required = false) String goodsDesc, @RequestParam(name = "goodsImage", required = false) String goodsImage, @RequestParam(name = "goodsName", required = false) String goodsName, @RequestParam(name = "goodsPrice", required = false) String goodsPrice, @RequestParam(name = "goodsStock", required = false) String goodsStock, @RequestParam(name = "goodsType", required = false) String goodsType, @RequestParam(name = "goodsStatus", required = false) String goodsStatus) {
+    public Result update(@RequestParam(name = "id") String id,
+                         @RequestParam(name = "goodsDesc", required = false) String goodsDesc,
+                         @RequestParam(name = "goodsImage", required = false) String goodsImage,
+                         @RequestParam(name = "goodsName", required = false) String goodsName,
+                         @RequestParam(name = "goodsPrice", required = false) String goodsPrice,
+                         @RequestParam(name = "goodsStock", required = false) String goodsStock,
+                         @RequestParam(name = "goodsType", required = false) String goodsType,
+                         @RequestParam(name = "goodsStatus", required = false) String goodsStatus) {
         GoodsInfo goodsInfo = new GoodsInfo();
         goodsInfo.setId(Long.parseLong(id));
         goodsInfo.setGoodsDesc(goodsDesc);
-        goodsInfo.setGoodsImage(goodsImage);
         goodsInfo.setGoodsName(goodsName);
         goodsInfo.setGoodsStatus(goodsStatus);
         goodsInfo.setGoodsType(goodsType);
@@ -104,6 +128,15 @@ public class GoodsController {
         }
         if (goodsStock != null) {
             goodsInfo.setGoodsStock(Integer.parseInt(goodsStock));
+        }
+        if (StringUtils.isNotBlank(goodsImage)) {
+            goodsInfo.setGoodsImage(USER_FILE_PATH + goodsInfo.getGoodsId() + ".text");
+            try {
+                FileUtil.write(goodsInfo.getGoodsImage(), goodsImage);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return Result.error(null, RespCode.GOODS_UPDATE_ERROR);
+            }
         }
         return Result.judgeResult(goodsInfoMapper.updateByPrimaryKeySelective(goodsInfo) == 1, goodsInfo, RespCode.GOODS_IS_NOT_EXIST);
     }
@@ -118,7 +151,14 @@ public class GoodsController {
      */
     @ResponseBody
     @RequestMapping(value = "/query", method = {RequestMethod.GET, RequestMethod.POST})
-    public Result query(@RequestParam(name = "merchantId", required = false) String merchantId, @RequestParam(name = "goodsId", required = false) String goodsId, @RequestParam(name = "userId", required = false) String userId, @RequestParam(name = "chnlAgentId", required = false) String chnlAgentId, @RequestParam(name = "goodsTypeId", required = false) String goodsTypeId, @RequestParam(name = "goodsStatus", required = false) String goodsStatus, @RequestParam(name = "pageSize", required = false) String pageSize, @RequestParam(name = "pageIndex", required = false) String pageIndex) {
+    public Result query(@RequestParam(name = "merchantId", required = false) String merchantId,
+                        @RequestParam(name = "goodsId", required = false) String goodsId,
+                        @RequestParam(name = "userId", required = false) String userId,
+                        @RequestParam(name = "chnlAgentId", required = false) String chnlAgentId,
+                        @RequestParam(name = "goodsTypeId", required = false) String goodsTypeId,
+                        @RequestParam(name = "goodsStatus", required = false) String goodsStatus,
+                        @RequestParam(name = "pageSize", required = false) String pageSize,
+                        @RequestParam(name = "pageIndex", required = false) String pageIndex) throws IOException {
         if (StringUtils.isBlank(pageSize)) {
             pageSize = "5";
         }
@@ -155,7 +195,13 @@ public class GoodsController {
             if (end > goodsInfos.size()) {
                 end = goodsInfos.size();
             }
-            dataMap.put("goodsList", goodsInfos.subList(start, end));
+            List<GoodsInfo> subGoodsInfos = goodsInfos.subList(start, end);
+            for(GoodsInfo goodsInfo : subGoodsInfos){
+               if(StringUtils.isNotBlank(goodsInfo.getGoodsImage())){
+                   goodsInfo.setGoodsImage(FileUtil.read(goodsInfo.getGoodsImage()));
+               }
+            }
+            dataMap.put("goodsList",subGoodsInfos);
             dataMap.put("totalSize", goodsInfos.size());
             return Result.success(dataMap);
         }
@@ -169,7 +215,8 @@ public class GoodsController {
      */
     @ResponseBody
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST})
-    public Result delete(@RequestParam(name = "id") String id, @RequestParam(name = "goodsType") String goodsType) {
+    public Result delete(@RequestParam(name = "id") String id,
+                         @RequestParam(name = "goodsType") String goodsType) {
         return Result.judgeResult(goodsInfoMapper.deleteByPrimaryKey(Long.parseLong(id)) == 1 && goodsTypeController.addGoods(goodsType, -1L).isSuccess(), null, RespCode.GOODS_UPDATE_ERROR);
     }
 
@@ -256,5 +303,58 @@ public class GoodsController {
     @RequestMapping(value = "/queryOne", method = {RequestMethod.GET, RequestMethod.POST})
     public Result queryOne(@RequestParam(name = "id") String id) {
         return Result.success(goodsInfoMapper.selectByPrimaryKey(Long.parseLong(id)));
+    }
+
+    /**
+     * 获取图片
+     */
+
+    @ResponseBody
+    @RequestMapping(value = "/getGoodsImage", method = {RequestMethod.GET, RequestMethod.POST})
+    public Result getGoodsImage(@RequestParam(name = "id") String id) {
+        GoodsInfo goodsInfo = goodsInfoMapper.selectByPrimaryKey(Long.parseLong(id));
+        try {
+            if (StringUtils.isBlank(goodsInfo.getGoodsImage())) {
+                return Result.success(null);
+            }
+            return Result.success(FileUtil.read(goodsInfo.getGoodsImage()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Result.error(null, RespCode.GOODSIMAGE_IS_NOT_EXISIT);
+        }
+    }
+
+    /**
+     * 更换图片
+     */
+
+
+    @ResponseBody
+    @RequestMapping(value = "/replaceGoodsImage", method = {RequestMethod.GET, RequestMethod.POST})
+    public Result replaceGoodsImage(@RequestParam(name = "id", required = false) String id,
+                                    @RequestParam(name = "goodsImage", required = false) String goodsImage) {
+        if (StringUtils.isBlank(id)) {
+            return Result.success(null);
+        }
+        GoodsInfo goodsInfo = goodsInfoMapper.selectByPrimaryKey(Long.parseLong(id));
+        try {
+            if (StringUtils.isBlank(goodsInfo.getGoodsImage())) {
+                String goodsImageFilePah = USER_FILE_PATH + goodsInfo.getGoodsId() + ".text";
+                goodsInfo.setGoodsImage(goodsImageFilePah);
+            }
+            FileUtil.write(goodsInfo.getGoodsImage(), goodsImage);
+            goodsInfoMapper.updateByPrimaryKey(goodsInfo);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Result.error(null, RespCode.GOODSIMAGE_IS_NOT_EXISIT);
+        }
+        return Result.success(null);
+    }
+
+
+    public static void main(String[] args) throws IOException {
+        String filePath = "/Users/zengbo/EarDi/img/goodsImg/sss.text";
+        System.out.println(filePath.substring(0, filePath.lastIndexOf("/") + 1));
+
     }
 }

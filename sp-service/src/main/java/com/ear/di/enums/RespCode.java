@@ -62,6 +62,10 @@ public enum RespCode {
     PERFORM_NOT_EXIST("000026", "直播信息不存在"),
 
     PERFORM_START_DTTM_ILLEGAL("000027", "直播开始时间不能早已当前时间"),
+
+    GOODSIMAGE_IS_NOT_EXISIT("000028","农产品不存在"),
+
+    PERMISSION_ADD_ERROR("000028","保存权限错误"),
     ;
 
     RespCode(String respCode, String respMessage) {
